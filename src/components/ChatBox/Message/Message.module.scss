@@ -1,0 +1,31 @@
+.message {
+   display: flex;
+
+   & > img {
+      width: 24px;
+      height: 24px;
+   }
+}
+
+.own {
+   flex-direction: row-reverse;
+   align-self: flex-end;
+}
+
+.messageContent {
+   display: flex;
+   flex-direction: column;
+   color: #fff;
+   margin: 0px 0.5rem;
+
+   & > span:nth-of-type(1) {
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 0.5rem;
+   }
+   & > span:nth-of-type(2) {
+      font-size: 12px;
+      color: #ccc;
+      align-self: flex-end;
+   }
+}

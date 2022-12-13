@@ -1,0 +1,14 @@
+.conversations {
+   text-align: center;
+   background: #fff;
+   height: 100%;
+   overflow: scroll;
+   border-radius: 1rem;
+   &::-webkit-scrollbar {
+      display: none;
+   }
+
+   & > h3 {
+      padding: 0.8rem 1rem;
+   }
+}

@@ -1,0 +1,57 @@
+.image {
+   width: 40px;
+   height: 40px;
+   border-radius: 50%;
+}
+
+.navbar {
+   position: relative;
+   display: flex;
+   height: 40px;
+   justify-content: space-between;
+   align-items: center;
+   gap: 1rem;
+   padding-right: 1rem;
+}
+
+.navRight {
+   position: relative;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   gap: 1rem;
+
+   & > span {
+      margin-left: -4px;
+   }
+}
+
+.menus {
+   position: absolute;
+   top: 82%;
+   right: 0;
+   background: #fff;
+   border-radius: 0.5rem;
+   padding: 0.5rem 0;
+   box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1);
+
+   & > div:nth-of-type(3) {
+      color: orangered;
+   }
+}
+
+.menuItem {
+   cursor: pointer;
+   font-size: 16px;
+   padding: 0.5rem 1.5rem;
+
+   &:hover {
+      background: #eee;
+   }
+}
+
+.newChatBtn {
+   width: 50px;
+   height: 34px;
+   font-size: 16px;
+}

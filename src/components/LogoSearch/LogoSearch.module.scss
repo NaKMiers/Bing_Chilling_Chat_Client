@@ -1,0 +1,46 @@
+.logoSearch {
+   display: flex;
+   width: 100%;
+   gap: 1rem;
+}
+
+.logo {
+   width: 40px;
+   height: 40px;
+   border-radius: 50%;
+}
+
+.inputWrap {
+   position: relative;
+   width: 100%;
+}
+
+.searchInput {
+   width: 100%;
+   height: 100%;
+   padding: 4px 12px;
+   border-radius: 0.5rem;
+   border: none;
+   outline: none;
+   font-size: 14px;
+}
+
+.searchBtn {
+   position: absolute;
+   top: 50%;
+   right: 0.5rem;
+   transform: translateY(-50%);
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   width: 28px;
+   height: 28px;
+   border-radius: 0.3rem;
+   color: #fff;
+   background: orangered;
+
+   & > svg {
+      width: 20px;
+      height: 20px;
+   }
+}

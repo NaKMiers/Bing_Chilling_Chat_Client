@@ -1,0 +1,82 @@
+.image {
+   width: 40px;
+   height: 40px;
+   border-radius: 50%;
+}
+
+.chatbox {
+   display: grid;
+   grid-template-rows: auto 69vh auto;
+   background: #fff;
+   border-radius: 1rem;
+}
+
+.chatHeader {
+   width: 100%;
+   display: flex;
+   justify-content: space-between;
+   padding: 1rem;
+   border-bottom: 2px solid #ececec;
+}
+
+.curChat {
+   position: relative;
+   display: flex;
+   align-items: center;
+   width: 100%;
+}
+
+.avatar {
+   position: relative;
+}
+.onlineDot {
+   position: absolute;
+   top: 0%;
+   right: 5%;
+   width: 10px;
+   height: 10px;
+   background: greenyellow;
+   border-radius: 50%;
+}
+.conversationInfo {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: flex-start;
+   padding-left: 0.5rem;
+
+   & > span:nth-of-type(1) {
+      font-size: 14px;
+      font-weight: bold;
+   }
+
+   & > span:nth-of-type(2) {
+      font-size: 12px;
+   }
+}
+
+.chatBody {
+   display: flex;
+   flex-direction: column;
+   padding: 1rem;
+}
+
+.chatSendBox {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   width: 100%;
+   padding: 0.6rem 1rem;
+}
+
+.sendBtn {
+   width: 60px;
+   height: 40px;
+   font-size: 15px;
+}
+
+.plusBtn {
+   width: 40px;
+   height: 40px;
+   font-size: 25px;
+}

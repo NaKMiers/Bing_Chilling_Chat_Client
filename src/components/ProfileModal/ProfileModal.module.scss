@@ -1,0 +1,91 @@
+.profileModal {
+   position: absolute;
+   top: 0;
+   bottom: 0;
+   left: 0;
+   right: 0;
+   width: 100vh;
+   height: 100vh;
+   background: rgba(0, 0, 0, 0.2);
+
+   & > form {
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+
+      width: 50%;
+      background-color: #fff;
+      border-radius: 1rem;
+      margin: auto;
+      padding: 1rem;
+   }
+}
+
+.usernameInput {
+   width: 100%;
+   height: 40px;
+   outline: none;
+   border: none;
+   border: 2px solid orangered;
+   border-radius: 0.5rem;
+   padding: 0.5rem 1rem;
+}
+
+.avatars {
+   width: 100%;
+   display: flex;
+   flex-wrap: wrap;
+}
+.avatarWrap {
+   width: calc(100% / 4);
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   cursor: pointer;
+   border-radius: 1rem;
+   overflow: hidden;
+}
+
+.selectedAvt {
+   border: 2px solid orangered;
+}
+
+.addImageBtn {
+   border: 2px solid orangered;
+}
+
+.avt {
+   width: 100%;
+   height: 100%;
+}
+
+.buttonWrap {
+   align-self: flex-end;
+   display: flex;
+   gap: 1rem;
+   width: 50%;
+}
+
+.saveBtn {
+   width: 50%;
+   height: 32px;
+   font-size: 14px;
+}
+.cancelBtn {
+   width: 50%;
+   height: 32px;
+   font-size: 14px;
+   border: 2px solid #ccc;
+   border-radius: 0.5rem;
+   cursor: pointer;
+
+   &:hover {
+      background: #fff;
+   }
+}
