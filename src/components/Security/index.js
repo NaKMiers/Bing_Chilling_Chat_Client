@@ -1,18 +1,19 @@
 import React, { useState } from 'react'
-import styles from './ChangePasswordModal.module.scss'
+import styles from './Security.module.scss'
 
-function ChangePasswordModal({ setSelectedModal }) {
+function Security({ setSelectedModal }) {
    const [password, setPassword] = useState('')
    const [newPassword, setNewPassword] = useState('')
 
    const hanleSubmit = e => {
       e.preventDefault()
-      // console.log({ avatar: selected, username })
    }
 
    return (
-      <div className={styles.profileModal}>
+      <div className={styles.Security}>
          <form onSubmit={hanleSubmit}>
+            <h3>Change Password</h3>
+
             <input
                className={styles.usernameInput}
                type='text'
@@ -40,4 +41,4 @@ function ChangePasswordModal({ setSelectedModal }) {
    )
 }
 
-export default ChangePasswordModal
+export default Security

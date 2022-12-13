@@ -1,16 +1,14 @@
-.profileModal {
+.NewRoomModal {
    position: absolute;
    top: 0;
    bottom: 0;
    left: 0;
    right: 0;
-   width: 100vh;
-   height: 100vh;
    background: rgba(0, 0, 0, 0.2);
 
    & > form {
       position: absolute;
-      top: 40%;
+      top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
 
@@ -19,8 +17,9 @@
       align-items: center;
       gap: 1rem;
 
-      width: 50%;
-      background-color: #fff;
+      max-width: 100%;
+      min-width: 25%;
+      background-color: #eee;
       border-radius: 1rem;
       margin: auto;
       padding: 1rem;
@@ -32,25 +31,43 @@
    height: 40px;
    outline: none;
    border: none;
-   border: 2px solid orangered;
+   background: #fff;
    border-radius: 0.5rem;
    padding: 0.5rem 1rem;
 }
 
-.buttonWrap {
-   align-self: flex-end;
+.security {
+   align-self: flex-start;
    display: flex;
+   gap: 0.5rem;
+   justify-content: flex-start;
+   align-items: center;
+   padding-left: 0.2rem;
+
+   & > label {
+      cursor: pointer;
+   }
+   & > input {
+      margin-top: 0.2rem;
+      cursor: pointer;
+   }
+}
+
+.buttonWrap {
+   display: flex;
+   justify-content: flex-end;
    gap: 1rem;
-   width: 50%;
+   width: 100%;
 }
 
 .saveBtn {
-   width: 50%;
+   width: 64px;
    height: 32px;
    font-size: 14px;
 }
+
 .cancelBtn {
-   width: 50%;
+   width: 64px;
    height: 32px;
    font-size: 14px;
    border: 2px solid #ccc;

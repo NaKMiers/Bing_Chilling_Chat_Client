@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { UilPlus } from '@iconscout/react-unicons'
+import { UilCheck } from '@iconscout/react-unicons'
 import styles from './ProfileModal.module.scss'
 import avatars from '../../Data/avatarData'
 
@@ -15,6 +16,8 @@ function ProfileModal({ setSelectedModal }) {
    return (
       <div className={styles.profileModal}>
          <form onSubmit={hanleSubmit}>
+            <h3>Profile</h3>
+
             <input
                className={styles.usernameInput}
                type='text'
@@ -31,12 +34,19 @@ function ProfileModal({ setSelectedModal }) {
                {avatars.map((avt, index) => (
                   <div
                      key={avt}
-                     className={`${styles.avatarWrap} ${
-                        selected === index ? styles.selectedAvt : ''
-                     }`}
-                     onClick={() => setSelected(index)}
+                     className={styles.avatarWrap}
+                     onClick={() => setSelected(index !== selected ? index : -1)}
                   >
-                     <img className={styles.avt} src={avt} alt='avt' />
+                     {selected === index && (
+                        <div className={styles.checkIcon}>
+                           <UilCheck />
+                        </div>
+                     )}
+                     <img
+                        className={`${styles.avt} ${selected === index ? styles.selectedAvt : ''}`}
+                        src={avt}
+                        alt='avt'
+                     />
                   </div>
                ))}
             </div>

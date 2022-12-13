@@ -13,7 +13,7 @@ function ChatBox() {
                   <div className={styles.onlineDot}></div>
                   <img className={styles.image} src='https://bom.so/FWOSVO' alt='avatar' />
                </div>
-               <div className={styles.conversationInfo}>
+               <div className={styles.roomInfo}>
                   <span>Nguyen Anh Khoa</span>
                   <span>Online</span>
                </div>

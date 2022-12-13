@@ -1,4 +1,4 @@
-.conversation {
+.room {
    display: flex;
    align-items: center;
    padding: 0.8rem 1rem;
@@ -28,7 +28,7 @@
    border-radius: 50%;
 }
 
-.conversationInfo {
+.roomInfo {
    display: flex;
    flex-direction: column;
    justify-content: center;

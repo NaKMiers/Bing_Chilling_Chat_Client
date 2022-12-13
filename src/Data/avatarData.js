@@ -7,6 +7,14 @@ const avatars = [
    'https://bom.so/8PcO3a',
    'https://bom.so/hO7QDv',
    'https://bom.so/gJ6JQZ',
+   'https://bom.so/gJ6JQZ',
+   'https://bom.so/gJ6JQZ',
+   'https://bom.so/gJ6JQZ',
+   'https://bom.so/gJ6JQZ',
+   'https://bom.so/gJ6JQZ',
+   'https://bom.so/gJ6JQZ',
+   'https://bom.so/gJ6JQZ',
+   'https://bom.so/gJ6JQZ',
 ]
 
 export default avatars
