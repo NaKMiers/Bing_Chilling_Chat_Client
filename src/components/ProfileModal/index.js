@@ -11,6 +11,7 @@ import userAction from '../../actions/userAction'
 function ProfileModal({ setSelectedModal }) {
    const dispatch = useDispatch()
    const { user } = useSelector(state => state.userReducer.userData)
+   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER
    const fileRef = useRef(null)
    const [username, setUsername] = useState(user?.username || '')
    const [selected, setSelected] = useState('')
@@ -37,7 +38,7 @@ function ProfileModal({ setSelectedModal }) {
       setAvatars(prev => [avt, ...prev])
    }
 
-   const hanleSubmit = async e => {
+   const handleSubmit = async e => {
       e.preventDefault()
       const findIndex = value => {
          let index = -1
@@ -82,7 +83,7 @@ function ProfileModal({ setSelectedModal }) {
 
    return (
       <div className={styles.profileModal}>
-         <form onSubmit={hanleSubmit}>
+         <form onSubmit={handleSubmit}>
             <h3>Profile</h3>
 
             <input
@@ -120,7 +121,7 @@ function ProfileModal({ setSelectedModal }) {
                      )}
                      <img
                         className={`${styles.avt} ${avt === selected ? styles.selectedAvt : ''}`}
-                        src={avt}
+                        src={avt.startsWith('blob:') ? avt : serverPublic + avt}
                         alt='avt'
                      />
                   </div>

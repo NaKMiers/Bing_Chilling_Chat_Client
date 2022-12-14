@@ -42,7 +42,7 @@ function Navbar({ setSelectedModal }) {
             {user && (
                <img
                   className={styles.image}
-                  src={user.avatar || serverPublic + 'defaultAvatar.png'}
+                  src={serverPublic + (user.avatar || 'defaultAvatar.png')}
                   alt='avatar'
                />
             )}

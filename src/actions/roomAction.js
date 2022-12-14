@@ -15,6 +15,10 @@ const roomAction = {
    leaveRoomSuccess: data => ({ type: 'LEAVE_SUCCESS', payload: data }),
    leaveRoomFail: () => ({ type: 'LEAVE_FAIL' }),
 
+   editRoomStart: () => ({ type: 'EDIT_START' }),
+   editRoomSuccess: data => ({ type: 'EDIT_SUCCESS', payload: data }),
+   editRoomFail: () => ({ type: 'EDIT_FAIL' }),
+
    setCurRoom: data => ({ type: 'SET_CUR_ROOM', payload: data }),
 
    clearAll: () => ({ type: 'CLEAR_ALL' }),

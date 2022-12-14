@@ -31,6 +31,11 @@ function ChatHeader({ setSelectedModal }) {
       setCopyRoomId(false)
    }
 
+   const handleSelectedModal = value => {
+      setSelectedModal(value)
+      setShowMenu(false)
+   }
+
    const handleLeave = async () => {
       dispatch(roomAction.leaveRoomStart())
       try {
@@ -50,7 +55,7 @@ function ChatHeader({ setSelectedModal }) {
                <div className={styles.onlineDot}></div>
                <img
                   className={styles.image}
-                  src={curRoom.avatar || serverPublic + 'defaultGroupAvatar.png'}
+                  src={serverPublic + (curRoom.avatar || 'defaultGroupAvatar.png')}
                   alt='avatar'
                />
             </div>
@@ -78,8 +83,14 @@ function ChatHeader({ setSelectedModal }) {
                      </div>
                   )}
                </div>
-               <div className={styles.menuItem} onClick={() => setSelectedModal('edit-room')}>
+               <div className={styles.menuItem} onClick={() => handleSelectedModal('edit-room')}>
                   Edit Room
+               </div>
+               <div
+                  className={styles.menuItem}
+                  onClick={() => handleSelectedModal('change-room-password')}
+               >
+                  Security
                </div>
                <div className={styles.menuItem} onClick={handleLeave}>
                   Leave

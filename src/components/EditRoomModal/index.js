@@ -5,19 +5,20 @@ import { useDispatch, useSelector } from 'react-redux'
 import styles from './EditRoomModal.module.scss'
 import avatarData from '../../Data/avatarData'
 import uploadApi from '../../apis/uploadApi'
-import userApi from '../../apis/userApi'
-import userAction from '../../actions/userAction'
+import roomApi from '../../apis/roomApi'
+import roomAction from '../../actions/roomAction'
 
 function EditRoomModal({ setSelectedModal }) {
    const dispatch = useDispatch()
    const { user } = useSelector(state => state.userReducer.userData)
    const curRoom = useSelector(state => state.roomReducer.curRoom)
+   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER
    const fileRef = useRef(null)
-   const [username, setUsername] = useState(curRoom?.title || '')
+   const [title, setTitle] = useState(curRoom?.title || '')
    const [selected, setSelected] = useState('')
    const [avatars, setAvatars] = useState(avatarData)
    const [avatarUploads, setAvatarUploads] = useState([])
-   console.log(username)
+   console.log(title)
 
    useEffect(
       () => () => {
@@ -38,7 +39,7 @@ function EditRoomModal({ setSelectedModal }) {
       setAvatars(prev => [avt, ...prev])
    }
 
-   const hanleSubmit = async e => {
+   const handleSubmit = async e => {
       e.preventDefault()
       const findIndex = value => {
          let index = -1
@@ -51,14 +52,14 @@ function EditRoomModal({ setSelectedModal }) {
          return index
       }
 
-      const userData = { username }
+      const roomData = { title, userId: user._id }
       if (selected.startsWith('blob:')) {
          const data = new FormData()
          const index = findIndex(selected)
          const filename = Date.now() + avatarUploads[index].name
          data.append('name', filename)
          data.append('file', avatarUploads[index])
-         userData.avatar = filename
+         roomData.avatar = filename
 
          try {
             const res = await uploadApi.uploadAvatar(data)
@@ -67,31 +68,35 @@ function EditRoomModal({ setSelectedModal }) {
             console.log(err)
          }
       } else {
-         userData.avatar = selected
+         roomData.avatar = selected
       }
-      console.log('userData: ', userData)
+      console.log('roomData: ', roomData)
 
+      // dispatch(roomAction.editRoomStart())
       try {
-         const res = await userApi.editProfile(user._id, userData)
-         console.log('res-edit-profile:', res)
-         dispatch(userAction.editProfile(res.data))
+         const res = await roomApi.editRoom(curRoom._id, roomData)
+         console.log('res-edit-room:', res)
+         dispatch(roomAction.editRoomSuccess(res.data))
+         dispatch(roomAction.setCurRoom(res.data))
          setSelectedModal(false)
       } catch (err) {
          console.log(err)
+         // dispatch(roomAction.editRoomFail())
       }
    }
 
    return (
       <div className={styles.EditRoomModal}>
-         <form onSubmit={hanleSubmit}>
-            <h3>Edit Room</h3>
+         <form onSubmit={handleSubmit}>
+            <h3>{curRoom.title}</h3>
 
             <input
+               name='title'
                className={styles.usernameInput}
                type='text'
-               placeholder='Username...'
-               value={username}
-               onChange={e => setUsername(e.target.value)}
+               placeholder='Title...'
+               value={title}
+               onChange={e => setTitle(e.target.value)}
             />
 
             <div className={styles.avatars}>
@@ -121,7 +126,7 @@ function EditRoomModal({ setSelectedModal }) {
                      )}
                      <img
                         className={`${styles.avt} ${avt === selected ? styles.selectedAvt : ''}`}
-                        src={avt}
+                        src={avt.startsWith('blob:') ? avt : serverPublic + avt}
                         alt='avt'
                      />
                   </div>

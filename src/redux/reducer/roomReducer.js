@@ -5,8 +5,18 @@ const initState = {
    error: false,
 }
 
+const findIndex = (array, id) => {
+   let index = -1
+   array.forEach((item, i) => {
+      if (item._id === id) index = i
+   })
+   return index
+}
+
 function reducer(state = initState, action) {
    let roomData = []
+   let index = -1
+
    switch (action.type) {
       case 'GET_ALL_ROOMS_START':
          return { ...state, loading: true, error: false }
@@ -61,6 +71,24 @@ function reducer(state = initState, action) {
             error: false,
          }
       case 'LEAVE_FAIL':
+         return { ...state, loading: false, error: true }
+
+      case 'EDIT_START':
+         return { ...state, loading: true, error: false }
+      case 'EDIT_SUCCESS':
+         index = findIndex(state.roomData, action.payload._id)
+         roomData = JSON.parse(localStorage.getItem('room-data'))
+         localStorage.setItem(
+            'room-data',
+            JSON.stringify(roomData.map((room, i) => (i !== index ? room : action.payload)))
+         )
+         return {
+            ...state,
+            roomData: state.roomData.map((room, i) => (i !== index ? room : action.payload)),
+            loading: false,
+            error: false,
+         }
+      case 'EDIT_FAIL':
          return { ...state, loading: false, error: true }
 
       case 'SET_CUR_ROOM':

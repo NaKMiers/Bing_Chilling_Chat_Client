@@ -10,7 +10,7 @@ function Room({ room }) {
             <div className={styles.onlineDot}></div>
             <img
                className={styles.image}
-               src={room.avatar || serverPublic + 'defaultGroupAvatar.png'}
+               src={serverPublic + (room.avatar || 'defaultGroupAvatar.png')}
                alt='avatar'
             />
          </div>

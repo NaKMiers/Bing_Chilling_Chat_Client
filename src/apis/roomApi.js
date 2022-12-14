@@ -14,6 +14,7 @@ const roomApi = {
    createRoom: data => API.post('/rooms', data),
    joinRoom: (id, data) => API.patch(`/rooms/${id}/join`, data),
    leaveRoom: (id, userId) => API.patch(`/rooms/${id}/leave`, { userId }),
+   changePassword: (id, data) => API.patch(`/rooms/${id}/password`, data),
    editRoom: (id, data) => API.put('/rooms/' + id, data),
    deleteRoom: (id, userId) => API.delete('/rooms/' + id, { userId }),
 }

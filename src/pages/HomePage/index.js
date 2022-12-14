@@ -9,6 +9,7 @@ import LoginLogoutModal from '../../components/LoginLogoutModal'
 import NewRoomModal from '../../components/NewRoomModal'
 import ProfileModal from '../../components/ProfileModal'
 import RightSide from '../../components/RightSide'
+import RoomSecurityModal from '../../components/RoomSecurityModal'
 import SecurityModal from '../../components/SecurityModal'
 import styles from './HomePage.module.scss'
 
@@ -48,6 +49,8 @@ function HomePage() {
             return <JoinRoomModal setSelectedModal={setSelectedModal} />
          case 'edit-room':
             return <EditRoomModal setSelectedModal={setSelectedModal} />
+         case 'change-room-password':
+            return <RoomSecurityModal setSelectedModal={setSelectedModal} />
          default:
             return null
       }
