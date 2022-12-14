@@ -14,7 +14,7 @@ import { createStore } from 'redux'
 
 // function loadFromLocalStorage() {
 //    try {
-//       const serializedStore = window.localStorage.getItem('store')
+//       const serializedStore = localStorage.getItem('store')
 //       if (serializedStore === null) return undefined
 //       return JSON.parse(serializedStore)
 //    } catch (e) {

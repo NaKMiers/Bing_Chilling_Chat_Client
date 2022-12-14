@@ -1,17 +1,22 @@
 import { UilBars } from '@iconscout/react-unicons'
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import userAction from '../../actions/userAction'
 import styles from './Navbar.module.scss'
 
 function Navbar({ setSelectedModal }) {
-   const user = useSelector(state => state.userReducer.userData)
-   console.log(user)
+   const dispatch = useDispatch()
+   const { user } = useSelector(state => state.userReducer.userData)
 
    const [showMenu, setShowMenu] = useState(false)
 
    const handleShowMenu = value => {
       setSelectedModal(value)
       setShowMenu(false)
+   }
+
+   const hanleLogout = () => {
+      dispatch(userAction.logout())
    }
 
    return (
@@ -40,17 +45,23 @@ function Navbar({ setSelectedModal }) {
 
             {showMenu && (
                <div className={styles.menus}>
-                  <div className={styles.menuItem} onClick={() => handleShowMenu('profile')}>
-                     Profile
-                  </div>
-                  <div
-                     className={styles.menuItem}
-                     onClick={() => handleShowMenu('change-password')}
-                  >
-                     Security
-                  </div>
+                  {user && (
+                     <>
+                        <div className={styles.menuItem} onClick={() => handleShowMenu('profile')}>
+                           Profile
+                        </div>
+                        <div
+                           className={styles.menuItem}
+                           onClick={() => handleShowMenu('change-password')}
+                        >
+                           Security
+                        </div>
+                     </>
+                  )}
                   {user ? (
-                     <div className={styles.menuItem}>Logout</div>
+                     <div className={styles.menuItem} onClick={hanleLogout}>
+                        Logout
+                     </div>
                   ) : (
                      <div className={styles.menuItem} onClick={() => handleShowMenu('login')}>
                         Login
