@@ -70,7 +70,7 @@ function LoginLogoutModal({ setSelectedModal }) {
             <div className={styles.buttonWrap}>
                <button className={`${styles.saveBtn} button`}>Login</button>
                <button className={`${styles.cancelBtn}`} onClick={() => setSelectedModal('')}>
-                  Cancle
+                  Cancel
                </button>
             </div>
          </form>
@@ -107,7 +107,7 @@ function LoginLogoutModal({ setSelectedModal }) {
                   Register
                </button>
                <button className={`${styles.cancelBtn}`} onClick={() => setSelectedModal('')}>
-                  Cancle
+                  Cancel
                </button>
             </div>
          </form>

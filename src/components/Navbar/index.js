@@ -2,11 +2,13 @@ import { UilBars } from '@iconscout/react-unicons'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import userAction from '../../actions/userAction'
+import roomAction from '../../actions/roomAction'
 import styles from './Navbar.module.scss'
 
 function Navbar({ setSelectedModal }) {
    const dispatch = useDispatch()
    const { user } = useSelector(state => state.userReducer.userData)
+   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER
 
    const [showMenu, setShowMenu] = useState(false)
 
@@ -17,6 +19,7 @@ function Navbar({ setSelectedModal }) {
 
    const hanleLogout = () => {
       dispatch(userAction.logout())
+      dispatch(roomAction.clearAll())
    }
 
    return (
@@ -36,8 +39,14 @@ function Navbar({ setSelectedModal }) {
             </button>
          </div>
          <div className={styles.navRight}>
-            <img className={styles.image} src='https://bom.so/FWOSVO' alt='avatar' />
-            <span>nakmiers</span>
+            {user && (
+               <img
+                  className={styles.image}
+                  src={user.avatar || serverPublic + 'defaultAvatar.png'}
+                  alt='avatar'
+               />
+            )}
+            <span>{user?.username}</span>
 
             <div onClick={() => setShowMenu(!showMenu)} style={{ cursor: 'pointer' }}>
                <UilBars />

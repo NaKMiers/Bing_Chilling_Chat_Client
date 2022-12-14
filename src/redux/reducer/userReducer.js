@@ -34,6 +34,16 @@ function reducer(state = initState, action) {
             error: false,
          }
 
+      case 'EDIT_PROFILE':
+         const token = JSON.parse(localStorage.getItem('profile')).token
+         localStorage.setItem('profile', JSON.stringify({ user: action.payload, token }))
+         return {
+            ...state,
+            userData: { ...state.userData, user: action.payload },
+            loading: false,
+            error: false,
+         }
+
       default:
          return state
    }

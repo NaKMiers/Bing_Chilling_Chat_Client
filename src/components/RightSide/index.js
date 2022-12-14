@@ -7,7 +7,7 @@ function RightSide({ setSelectedModal }) {
    return (
       <div className={styles.rightSide}>
          <Navbar setSelectedModal={setSelectedModal} />
-         <ChatBox />
+         <ChatBox setSelectedModal={setSelectedModal} />
       </div>
    )
 }

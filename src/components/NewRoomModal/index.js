@@ -1,22 +1,38 @@
 import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import styles from './NewRoomModal.module.scss'
+import roomApi from '../../apis/roomApi'
+import roomAction from '../../actions/roomAction'
 
 function NewRoomModal({ setSelectedModal }) {
+   const { user } = useSelector(state => state.userReducer.userData)
+   const dispatch = useDispatch()
    const [formData, setFormData] = useState({ title: '', password: '' })
    const [security, setSecurity] = useState(false)
 
    const handleChange = e => {
-      setFormData({ [e.target.name]: e.target.value })
+      setFormData({ ...formData, [e.target.name]: e.target.value })
    }
 
-   const handleSubmit = e => {
+   const handleSubmit = async e => {
       e.preventDefault()
+      const roomData = { ...formData, host: user._id, members: [user._id] }
+      dispatch(roomAction.createRoomStart())
+      try {
+         const res = await roomApi.createRoom(roomData)
+         console.log('res-create-room: ', res)
+         dispatch(roomAction.createRoomSuccess(res.data))
+         setSelectedModal(false)
+      } catch (err) {
+         console.log(err)
+         dispatch(roomAction.createRoomFail())
+      }
    }
 
    return (
       <div className={styles.NewRoomModal}>
          <form onSubmit={handleSubmit}>
-            <h3>Title...</h3>
+            <h3>{formData.title || 'Create Room'}</h3>
 
             <input
                name='title'
@@ -33,7 +49,7 @@ function NewRoomModal({ setSelectedModal }) {
                   id='security'
                   type='checkbox'
                   name='security'
-                  onChange={e => setSecurity(!security)}
+                  onChange={() => setSecurity(!security)}
                />
             </div>
 
@@ -41,7 +57,7 @@ function NewRoomModal({ setSelectedModal }) {
                <input
                   name='password'
                   className={styles.usernameInput}
-                  type='text'
+                  type='password'
                   placeholder='Password...'
                   value={formData.password}
                   onChange={handleChange}
@@ -51,7 +67,7 @@ function NewRoomModal({ setSelectedModal }) {
             <div className={styles.buttonWrap}>
                <button className={`${styles.saveBtn} button`}>Create</button>
                <button className={`${styles.cancelBtn}`} onClick={() => setSelectedModal('')}>
-                  Cancle
+                  Cancel
                </button>
             </div>
          </form>

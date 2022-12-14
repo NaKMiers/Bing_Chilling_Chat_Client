@@ -8,6 +8,8 @@ const userAction = {
    registerFail: () => ({ type: 'REGISTER_FAIL' }),
 
    logout: () => ({ type: 'LOGOUT' }),
+
+   editProfile: data => ({ type: 'EDIT_PROFILE', payload: data }),
 }
 
 export default userAction

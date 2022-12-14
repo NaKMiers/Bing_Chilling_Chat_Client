@@ -9,9 +9,8 @@ API.interceptors.request.use(req => {
    return req
 })
 
-const userApi = {
-   editProfile: (id, data) => API.patch(`/users/${id}/profile`, data),
-   changePassword: (id, data) => API.patch(`/users/${id}/password`, data),
+const messageApi = {
+   getAllMessages: userId => API.get('/messages/' + userId),
 }
 
-export default userApi
+export default messageApi

@@ -1,15 +1,21 @@
 import React from 'react'
 import styles from './Room.module.scss'
 
-function Room() {
+function Room({ room }) {
+   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER
+
    return (
       <div className={styles.room}>
          <div className={styles.avatar}>
             <div className={styles.onlineDot}></div>
-            <img className={styles.image} src='https://bom.so/FWOSVO' alt='avatar' />
+            <img
+               className={styles.image}
+               src={room.avatar || serverPublic + 'defaultGroupAvatar.png'}
+               alt='avatar'
+            />
          </div>
          <div className={styles.roomInfo}>
-            <span>Nguyen Anh Khoa</span>
+            <span>{room.title}</span>
             <span>Online</span>
          </div>
       </div>

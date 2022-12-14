@@ -2,17 +2,18 @@ import React, { useEffect, useRef, useState } from 'react'
 import { UilPlus } from '@iconscout/react-unicons'
 import { UilCheck } from '@iconscout/react-unicons'
 import { useDispatch, useSelector } from 'react-redux'
-import styles from './ProfileModal.module.scss'
+import styles from './EditRoomModal.module.scss'
 import avatarData from '../../Data/avatarData'
 import uploadApi from '../../apis/uploadApi'
 import userApi from '../../apis/userApi'
 import userAction from '../../actions/userAction'
 
-function ProfileModal({ setSelectedModal }) {
+function EditRoomModal({ setSelectedModal }) {
    const dispatch = useDispatch()
    const { user } = useSelector(state => state.userReducer.userData)
+   const curRoom = useSelector(state => state.roomReducer.curRoom)
    const fileRef = useRef(null)
-   const [username, setUsername] = useState(user?.username || '')
+   const [username, setUsername] = useState(curRoom?.title || '')
    const [selected, setSelected] = useState('')
    const [avatars, setAvatars] = useState(avatarData)
    const [avatarUploads, setAvatarUploads] = useState([])
@@ -81,9 +82,9 @@ function ProfileModal({ setSelectedModal }) {
    }
 
    return (
-      <div className={styles.profileModal}>
+      <div className={styles.EditRoomModal}>
          <form onSubmit={hanleSubmit}>
-            <h3>Profile</h3>
+            <h3>Edit Room</h3>
 
             <input
                className={styles.usernameInput}
@@ -138,4 +139,4 @@ function ProfileModal({ setSelectedModal }) {
    )
 }
 
-export default ProfileModal
+export default EditRoomModal

@@ -1,12 +1,23 @@
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
+import userApi from '../../apis/userApi'
 import styles from './Security.module.scss'
 
 function Security({ setSelectedModal }) {
+   const { user } = useSelector(state => state.userReducer.userData)
+
    const [password, setPassword] = useState('')
    const [newPassword, setNewPassword] = useState('')
 
-   const hanleSubmit = e => {
+   const hanleSubmit = async e => {
       e.preventDefault()
+
+      try {
+         const res = await userApi.changePassword(user._id, { password, newPassword })
+         console.log('res-change-password: ', res)
+      } catch (err) {
+         console.log(err)
+      }
    }
 
    return (
@@ -16,7 +27,7 @@ function Security({ setSelectedModal }) {
 
             <input
                className={styles.usernameInput}
-               type='text'
+               type='password'
                placeholder='Password...'
                value={password}
                onChange={e => setPassword(e.target.value)}
@@ -24,7 +35,7 @@ function Security({ setSelectedModal }) {
 
             <input
                className={styles.usernameInput}
-               type='text'
+               type='password'
                placeholder='New Password...'
                value={newPassword}
                onChange={e => setNewPassword(e.target.value)}
@@ -33,7 +44,7 @@ function Security({ setSelectedModal }) {
             <div className={styles.buttonWrap}>
                <button className={`${styles.saveBtn} button`}>Save</button>
                <button className={`${styles.cancelBtn}`} onClick={() => setSelectedModal('')}>
-                  Cancle
+                  Cancel
                </button>
             </div>
          </form>
