@@ -10,7 +10,10 @@ API.interceptors.request.use(req => {
 })
 
 const messageApi = {
-   getAllMessages: userId => API.get('/messages/' + userId),
+   getAllMessages: (id, data) => API.post('/messages/' + id, data),
+   createMessage: data => API.post('/messages', data),
+   editMessage: (id, data) => API.put('/messages' + id, data),
+   deleteMessage: (id, data) => API.delete('/messages' + id, data),
 }
 
 export default messageApi

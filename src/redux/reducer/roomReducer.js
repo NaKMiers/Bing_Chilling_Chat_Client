@@ -15,7 +15,12 @@ const findIndex = (array, id) => {
 
 function reducer(state = initState, action) {
    let roomData = []
+   let curRoom
    let index = -1
+   let userJoinId = action.payload?.userJoinId
+   let userLeaveId = action.payload?.userLeaveId
+   let curRoomId = action.payload?.curRoomId
+   let roomId = action.payload?.roomId
 
    switch (action.type) {
       case 'GET_ALL_ROOMS_START':
@@ -53,6 +58,91 @@ function reducer(state = initState, action) {
          }
       case 'JOIN_ROOM_FAIL':
          return { ...state, loading: false, error: true }
+
+      case 'ANOTHER_USER_JOIN_ROOM':
+         userJoinId = action.payload.userJoinId
+         roomId = action.payload.roomId
+         curRoomId = action.payload.curRoomId
+         index = findIndex(state.roomData, roomId)
+         roomData = JSON.parse(localStorage.getItem('room-data'))
+         curRoom = JSON.parse(localStorage.getItem('cur-room'))
+
+         localStorage.setItem(
+            'room-data',
+            JSON.stringify(
+               roomData.map((room, i) =>
+                  index === i ? { ...room, members: [...room.members, userJoinId] } : room
+               )
+            )
+         )
+
+         localStorage.setItem(
+            'cur-room',
+            JSON.stringify(
+               curRoomId === roomId
+                  ? { ...curRoom, members: [...curRoom.members, userJoinId] }
+                  : curRoom
+            )
+         )
+
+         return {
+            ...state,
+            roomData: state.roomData.map((room, i) =>
+               index === i ? { ...room, members: [...room.members, userJoinId] } : room
+            ),
+            curRoom:
+               curRoomId === roomId
+                  ? { ...state.curRoom, members: [...state.curRoom.members, userJoinId] }
+                  : state.curRoom,
+            loading: false,
+            error: false,
+         }
+
+      case 'ANOTHER_USER_LEAVE_ROOM':
+         userLeaveId = action.payload.userLeaveId
+         roomId = action.payload.roomId
+         curRoomId = action.payload.curRoomId
+         index = findIndex(state.roomData, roomId)
+         roomData = JSON.parse(localStorage.getItem('room-data'))
+         curRoom = JSON.parse(localStorage.getItem('cur-room'))
+
+         localStorage.setItem(
+            'room-data',
+            JSON.stringify(
+               roomData.map((room, i) =>
+                  index === i
+                     ? { ...room, members: room.members.filter(id => id !== userLeaveId) }
+                     : room
+               )
+            )
+         )
+
+         localStorage.setItem(
+            'cur-room',
+            JSON.stringify(
+               curRoomId === roomId
+                  ? { ...curRoom, members: curRoom.members.filter(id => id !== userLeaveId) }
+                  : curRoom
+            )
+         )
+
+         return {
+            ...state,
+            roomData: state.roomData.map((room, i) =>
+               index === i
+                  ? { ...room, members: room.members.filter(id => id !== userLeaveId) }
+                  : room
+            ),
+            curRoom:
+               curRoomId === roomId
+                  ? {
+                       ...state.curRoom,
+                       members: state.curRoom.members.filter(id => id !== userLeaveId),
+                    }
+                  : state.curRoom,
+            loading: false,
+            error: false,
+         }
 
       case 'LEAVE_START':
          return { ...state, loading: true, error: false }

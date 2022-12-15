@@ -11,6 +11,9 @@ const roomAction = {
    joinRoomSuccess: data => ({ type: 'JOIN_ROOM_SUCCESS', payload: data }),
    joinRoomFail: () => ({ type: 'JOIN_ROOM_FAIL' }),
 
+   anotherUserJoinRoom: data => ({ type: 'ANOTHER_USER_JOIN_ROOM', payload: data }),
+   anotherUserLeaveRoom: data => ({ type: 'ANOTHER_USER_LEAVE_ROOM', payload: data }),
+
    leaveRoomStart: () => ({ type: 'LEAVE_START' }),
    leaveRoomSuccess: data => ({ type: 'LEAVE_SUCCESS', payload: data }),
    leaveRoomFail: () => ({ type: 'LEAVE_FAIL' }),

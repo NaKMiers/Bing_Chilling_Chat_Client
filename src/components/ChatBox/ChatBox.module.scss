@@ -16,6 +16,12 @@
    display: flex;
    flex-direction: column;
    padding: 1rem;
+   gap: 2px;
+   overflow: scroll;
+
+   &::-webkit-scrollbar {
+      display: none;
+   }
 }
 
 .chatSendBox {

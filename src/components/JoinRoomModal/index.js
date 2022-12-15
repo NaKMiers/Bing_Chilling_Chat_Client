@@ -4,7 +4,7 @@ import roomAction from '../../actions/roomAction'
 import roomApi from '../../apis/roomApi'
 import styles from './JoinRoomModal.module.scss'
 
-function JoinRoomModal({ setSelectedModal }) {
+function JoinRoomModal({ socket, setSelectedModal }) {
    const dispatch = useDispatch()
    const { user } = useSelector(state => state.userReducer.userData)
 
@@ -15,11 +15,16 @@ function JoinRoomModal({ setSelectedModal }) {
    const handleSubmit = async e => {
       e.preventDefault()
 
+      // join room in server
       dispatch(roomAction.joinRoomStart())
       try {
          const res = await roomApi.joinRoom(roomId, { userId: user._id, password })
-         console.log('res-join-room: ', res)
          dispatch(roomAction.joinRoomSuccess(res.data))
+
+         // join room in socket.io
+         console.log('join room in socket.io')
+         socket.current.emit('join-room', { userJoinId: user._id, roomId })
+
          setSelectedModal(false)
       } catch (err) {
          dispatch(roomAction.joinRoomFail())

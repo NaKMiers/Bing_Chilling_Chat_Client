@@ -14,11 +14,10 @@ function RoomSecurityModal({ setSelectedModal }) {
       e.preventDefault()
 
       try {
-         const res = await roomApi.changePassword(curRoom._id, {
+         await roomApi.changePassword(curRoom._id, {
             userId: user._id,
             password: newPassword,
          })
-         console.log('res-change-password: ', res)
          setSelectedModal(false)
       } catch (err) {
          console.log(err)

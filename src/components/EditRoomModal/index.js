@@ -18,7 +18,6 @@ function EditRoomModal({ setSelectedModal }) {
    const [selected, setSelected] = useState('')
    const [avatars, setAvatars] = useState(avatarData)
    const [avatarUploads, setAvatarUploads] = useState([])
-   console.log(title)
 
    useEffect(
       () => () => {
@@ -62,26 +61,23 @@ function EditRoomModal({ setSelectedModal }) {
          roomData.avatar = filename
 
          try {
-            const res = await uploadApi.uploadAvatar(data)
-            console.log('res-upload: ', res)
+            await uploadApi.uploadAvatar(data)
          } catch (err) {
             console.log(err)
          }
       } else {
          roomData.avatar = selected
       }
-      console.log('roomData: ', roomData)
 
-      // dispatch(roomAction.editRoomStart())
+      dispatch(roomAction.editRoomStart())
       try {
          const res = await roomApi.editRoom(curRoom._id, roomData)
-         console.log('res-edit-room:', res)
          dispatch(roomAction.editRoomSuccess(res.data))
          dispatch(roomAction.setCurRoom(res.data))
          setSelectedModal(false)
       } catch (err) {
          console.log(err)
-         // dispatch(roomAction.editRoomFail())
+         dispatch(roomAction.editRoomFail())
       }
    }
 

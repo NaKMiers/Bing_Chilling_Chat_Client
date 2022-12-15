@@ -5,17 +5,13 @@ import styles from './ChatHeader.module.scss'
 import roomAction from '../../../actions/roomAction'
 import roomApi from '../../../apis/roomApi'
 
-function ChatHeader({ setSelectedModal }) {
+function ChatHeader({ socket, setSelectedModal }) {
    const dispatch = useDispatch()
    const { user } = useSelector(state => state.userReducer.userData)
    const curRoom = useSelector(state => state.roomReducer.curRoom)
    const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER
 
    const [isCopyRoomId, setCopyRoomId] = useState(false)
-
-   useEffect(() => {
-      console.log('render')
-   }, [curRoom])
 
    const [showMenu, setShowMenu] = useState(false)
 
@@ -37,11 +33,14 @@ function ChatHeader({ setSelectedModal }) {
    }
 
    const handleLeave = async () => {
+      // leave room in server
       dispatch(roomAction.leaveRoomStart())
       try {
-         const res = await roomApi.leaveRoom(curRoom._id, user._id)
-         console.log('res-leave-room: ', res)
+         await roomApi.leaveRoom(curRoom._id, user._id)
          dispatch(roomAction.leaveRoomSuccess(curRoom._id))
+
+         // leave room in socket.io
+         socket.current.emit('leave-room', { userLeaveId: user._id, roomId: curRoom._id })
       } catch (err) {
          console.log(err)
          dispatch(roomAction.leaveRoomFail())

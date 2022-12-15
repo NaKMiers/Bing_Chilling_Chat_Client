@@ -19,7 +19,6 @@ function LoginLogoutModal({ setSelectedModal }) {
          dispatch(userAction.loginStart())
          try {
             const res = await authApi.login(formData)
-            console.log('res-login:', res)
             dispatch(userAction.loginSuccess(res.data))
             setSelectedModal(false)
          } catch (err) {
@@ -30,7 +29,6 @@ function LoginLogoutModal({ setSelectedModal }) {
          dispatch(userAction.registerStart())
          try {
             const res = await authApi.register(formData)
-            console.log('res-register:', res)
             dispatch(userAction.registerSuccess(res.data))
             setSelectedModal(false)
          } catch (err) {

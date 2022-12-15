@@ -10,6 +10,7 @@ API.interceptors.request.use(req => {
 })
 
 const userApi = {
+   getUser: id => API.get('/users/' + id),
    editProfile: (id, data) => API.patch(`/users/${id}/profile`, data),
    changePassword: (id, data) => API.patch(`/users/${id}/password`, data),
 }

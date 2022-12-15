@@ -20,7 +20,6 @@ function NewRoomModal({ setSelectedModal }) {
       dispatch(roomAction.createRoomStart())
       try {
          const res = await roomApi.createRoom(roomData)
-         console.log('res-create-room: ', res)
          dispatch(roomAction.createRoomSuccess(res.data))
          setSelectedModal(false)
       } catch (err) {

@@ -17,7 +17,6 @@ function ProfileModal({ setSelectedModal }) {
    const [selected, setSelected] = useState('')
    const [avatars, setAvatars] = useState(avatarData)
    const [avatarUploads, setAvatarUploads] = useState([])
-   console.log(username)
 
    useEffect(
       () => () => {
@@ -33,7 +32,6 @@ function ProfileModal({ setSelectedModal }) {
    const onUploadImage = e => {
       const imgFile = e.target.files[0]
       const avt = URL.createObjectURL(imgFile)
-      console.log(avt)
       setAvatarUploads([imgFile, ...avatarUploads])
       setAvatars(prev => [avt, ...prev])
    }
@@ -61,19 +59,16 @@ function ProfileModal({ setSelectedModal }) {
          userData.avatar = filename
 
          try {
-            const res = await uploadApi.uploadAvatar(data)
-            console.log('res-upload: ', res)
+            await uploadApi.uploadAvatar(data)
          } catch (err) {
             console.log(err)
          }
       } else {
          userData.avatar = selected
       }
-      console.log('userData: ', userData)
 
       try {
          const res = await userApi.editProfile(user._id, userData)
-         console.log('res-edit-profile:', res)
          dispatch(userAction.editProfile(res.data))
          setSelectedModal(false)
       } catch (err) {

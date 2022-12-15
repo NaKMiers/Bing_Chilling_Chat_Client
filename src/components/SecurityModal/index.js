@@ -13,8 +13,7 @@ function Security({ setSelectedModal }) {
       e.preventDefault()
 
       try {
-         const res = await userApi.changePassword(user._id, { password, newPassword })
-         console.log('res-change-password: ', res)
+         await userApi.changePassword(user._id, { password, newPassword })
       } catch (err) {
          console.log(err)
       }
