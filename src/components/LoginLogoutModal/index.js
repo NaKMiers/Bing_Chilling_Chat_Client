@@ -5,12 +5,16 @@ import authApi from '../../apis/authApi'
 import styles from './LoginLogoutModal.module.scss'
 import validate from '../../Utils/validate'
 
-function LoginLogoutModal({ setSelectedModal }) {
+function LoginLogoutModal() {
    const dispatch = useDispatch()
 
    const [isLogin, setLogin] = useState(true)
    const [formData, setFormData] = useState({ username: '', password: '' })
    const [errors, setErrors] = useState(null)
+
+   const handleOpenModal = value => {
+      dispatch(userAction.changeCurModal(value))
+   }
 
    const handleChange = e => setFormData({ ...formData, [e.target.name]: e.target.value })
 
@@ -19,7 +23,7 @@ function LoginLogoutModal({ setSelectedModal }) {
       try {
          const res = await authApi.login(formData)
          dispatch(userAction.loginSuccess(res.data))
-         setSelectedModal(false)
+         handleOpenModal('')
       } catch (err) {
          setErrors({ general: err.response.data.message })
       }
@@ -29,7 +33,7 @@ function LoginLogoutModal({ setSelectedModal }) {
       try {
          const res = await authApi.register(formData)
          dispatch(userAction.registerSuccess(res.data))
-         setSelectedModal(false)
+         handleOpenModal('')
       } catch (err) {
          setErrors({ general: err.response.data.message })
       }
@@ -107,7 +111,7 @@ function LoginLogoutModal({ setSelectedModal }) {
 
             <div className={styles.buttonWrap}>
                <button className={`${styles.saveBtn} button`}>Login</button>
-               <button className={`${styles.cancelBtn}`} onClick={() => setSelectedModal('')}>
+               <button className={`${styles.cancelBtn}`} onClick={() => handleOpenModal('')}>
                   Cancel
                </button>
             </div>
@@ -150,7 +154,7 @@ function LoginLogoutModal({ setSelectedModal }) {
                <button className={`${styles.saveBtn} button`} style={{ width: 80 }}>
                   Register
                </button>
-               <button className={`${styles.cancelBtn}`} onClick={() => setSelectedModal('')}>
+               <button className={`${styles.cancelBtn}`} onClick={() => handleOpenModal('')}>
                   Cancel
                </button>
             </div>

@@ -1,15 +1,21 @@
 import React, { memo, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import userApi from '../../apis/userApi'
 import styles from './Security.module.scss'
 import validate from '../../Utils/validate'
+import userAction from '../../actions/userAction'
 
-function Security({ setSelectedModal }) {
+function Security() {
+   const dispatch = useDispatch()
    const { user } = useSelector(state => state.userReducer.userData)
 
    const [password, setPassword] = useState('')
    const [newPassword, setNewPassword] = useState('')
    const [errors, setErrors] = useState(null)
+
+   const handleOpenModal = value => {
+      dispatch(userAction.changeCurModal(value))
+   }
 
    const hanleSubmit = async e => {
       e.preventDefault()
@@ -32,7 +38,7 @@ function Security({ setSelectedModal }) {
          if (!validate.checkErrors(errorChecks)) {
             try {
                await userApi.changePassword(user._id, { password, newPassword })
-               setSelectedModal(false)
+               handleOpenModal('')
                setErrors(null)
             } catch (err) {
                console.log(err)
@@ -71,7 +77,7 @@ function Security({ setSelectedModal }) {
 
             <div className={styles.buttonWrap}>
                <button className={`${styles.saveBtn} button`}>Save</button>
-               <button className={`${styles.cancelBtn}`} onClick={() => setSelectedModal('')}>
+               <button className={`${styles.cancelBtn}`} onClick={() => handleOpenModal('')}>
                   Cancel
                </button>
             </div>

@@ -4,7 +4,7 @@ import LogoSearch from '../LogoSearch'
 import Rooms from '../Rooms'
 import styles from './LeftSide.module.scss'
 
-function LeftSide({ hide }) {
+function LeftSide({ hide, setHide }) {
    let rooms = useSelector(state => state.roomReducer.roomData)
 
    const [searchValue, setSearchValue] = useState('')
@@ -12,10 +12,10 @@ function LeftSide({ hide }) {
    rooms = rooms?.filter(room => room.title.toLowerCase().includes(searchValue))
 
    return (
-      <div className={styles.leftSide} style={{ display: hide ? 'none' : 'flex' }}>
+      <div className={`${styles.leftSide} ${hide === 'left' ? styles.hide : ''}`}>
          <LogoSearch searchValue={searchValue} setSearchValue={setSearchValue} />
 
-         <Rooms rooms={rooms} />
+         <Rooms rooms={rooms} hide={hide} setHide={setHide} />
       </div>
    )
 }

@@ -1,11 +1,12 @@
 import React, { memo, useState } from 'react'
+import { UilAngleLeftB, UilBars } from '@iconscout/react-unicons'
 import { useDispatch, useSelector } from 'react-redux'
-import { UilBars, UilAngleLeftB } from '@iconscout/react-unicons'
-import userAction from '../../actions/userAction'
+import { Link } from 'react-router-dom'
 import roomAction from '../../actions/roomAction'
+import userAction from '../../actions/userAction'
 import styles from './Navbar.module.scss'
 
-function Navbar({ setSelectedModal }) {
+function Navbar({ setHide }) {
    const dispatch = useDispatch()
    const { user } = useSelector(state => state.userReducer.userData)
    const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER
@@ -13,8 +14,12 @@ function Navbar({ setSelectedModal }) {
    const [showMenu, setShowMenu] = useState(false)
 
    const handleShowMenu = value => {
-      setSelectedModal(value)
+      dispatch(userAction.changeCurModal(value))
       setShowMenu(false)
+   }
+
+   const handleOpenModal = value => {
+      dispatch(userAction.changeCurModal(value))
    }
 
    const hanleLogout = () => {
@@ -25,38 +30,27 @@ function Navbar({ setSelectedModal }) {
    return (
       <div className={styles.navbar}>
          <div className={styles.navLeft}>
-            <button
-               className={`${styles.newChatBtn} button`}
-               onClick={() => setSelectedModal('new-room')}
-            >
+            <button className={`${styles.chatBtn} button`} onClick={() => handleOpenModal('new-room')}>
                New
             </button>
-            <button
-               className={`${styles.newChatBtn} button`}
-               onClick={() => setSelectedModal('join-room')}
-            >
+            <button className={`${styles.chatBtn} button`} onClick={() => handleOpenModal('join-room')}>
                Join
             </button>
+            <div className={`${styles.navIcon} icon`} onClick={() => setShowMenu(!showMenu)}>
+               <UilBars />
+            </div>
          </div>
          <div className={styles.navRight}>
-            <div className={`${styles.navIcon} icon`}>
+            <div className={`${styles.navIcon} icon`} onClick={() => setHide('right')}>
                <UilAngleLeftB />
             </div>
 
             {user && (
-               <>
-                  <img
-                     className={styles.image}
-                     src={serverPublic + (user.avatar || 'defaultAvatar.png')}
-                     alt='avatar'
-                  />
-                  <img
-                     className={styles.image}
-                     src={serverPublic + (user.avatar || 'defaultAvatar.png')}
-                     alt='avatar'
-                     onClick={() => setShowMenu(!showMenu)}
-                  />
-               </>
+               <img
+                  className={styles.image}
+                  src={serverPublic + (user.avatar || 'defaultAvatar.png')}
+                  alt='avatar'
+               />
             )}
             <span>{user?.username}</span>
 
@@ -70,6 +64,9 @@ function Navbar({ setSelectedModal }) {
                      <>
                         <div className={styles.menuItem} onClick={() => handleShowMenu('profile')}>
                            Profile
+                        </div>
+                        <div className={styles.menuItem}>
+                           <Link to='/setting'>Setting</Link>
                         </div>
                         <div
                            className={styles.menuItem}

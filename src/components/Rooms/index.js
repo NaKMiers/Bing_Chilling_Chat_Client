@@ -4,7 +4,7 @@ import roomAction from '../../actions/roomAction'
 import Room from './Room'
 import styles from './Rooms.module.scss'
 
-function Rooms({ rooms }) {
+function Rooms({ rooms, setHide }) {
    const dispatch = useDispatch()
 
    const setCurRoom = room => {
@@ -18,7 +18,13 @@ function Rooms({ rooms }) {
 
          <div className={styles.roomContainer}>
             {rooms?.map((room, index) => (
-               <div key={room._id} onClick={() => setCurRoom(room)}>
+               <div
+                  key={room._id}
+                  onClick={() => {
+                     setCurRoom(room)
+                     setHide('left')
+                  }}
+               >
                   <Room room={room} />
                </div>
             ))}

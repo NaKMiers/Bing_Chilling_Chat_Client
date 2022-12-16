@@ -3,16 +3,11 @@ import ChatBox from '../ChatBox'
 import Navbar from '../Navbar'
 import styles from './RightSide.module.scss'
 
-function RightSide({ setSelectedModal, setSendMessage, receivedMessage, socket, hide }) {
+function RightSide({ setSendMessage, receivedMessage, socket, hide, setHide }) {
    return (
-      <div className={styles.rightSide} style={{ display: hide ? 'none' : 'grid' }}>
-         <Navbar socket={socket} setSelectedModal={setSelectedModal} />
-         <ChatBox
-            setSelectedModal={setSelectedModal}
-            setSendMessage={setSendMessage}
-            receivedMessage={receivedMessage}
-            socket={socket}
-         />
+      <div className={`${styles.rightSide} ${hide === 'right' ? styles.hide : ''}`}>
+         <Navbar setHide={setHide} socket={socket} />
+         <ChatBox setSendMessage={setSendMessage} receivedMessage={receivedMessage} socket={socket} />
       </div>
    )
 }

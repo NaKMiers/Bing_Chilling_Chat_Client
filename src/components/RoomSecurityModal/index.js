@@ -1,10 +1,12 @@
 import React, { memo, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import roomApi from '../../apis/roomApi'
 import styles from './RoomSecurityModal.module.scss'
 import validate from '../../Utils/validate'
+import userAction from '../../actions/userAction'
 
-function RoomSecurityModal({ setSelectedModal }) {
+function RoomSecurityModal() {
+   const dispatch = useDispatch()
    const { user } = useSelector(state => state.userReducer.userData)
    const curRoom = useSelector(state => state.roomReducer.curRoom)
 
@@ -12,13 +14,17 @@ function RoomSecurityModal({ setSelectedModal }) {
    const [newPassword, setNewPassword] = useState('')
    const [errors, setErrors] = useState(null)
 
+   const handleOpenModal = value => {
+      dispatch(userAction.changeCurModal(value))
+   }
+
    const handleChangeRoomPassword = async () => {
       try {
          await roomApi.changePassword(curRoom._id, {
             userId: user._id,
             password: newPassword,
          })
-         setSelectedModal(false)
+         handleOpenModal('')
       } catch (err) {
          console.log(err)
       }
@@ -72,7 +78,7 @@ function RoomSecurityModal({ setSelectedModal }) {
 
             <div className={styles.buttonWrap}>
                <button className={`${styles.saveBtn} button`}>Save</button>
-               <button className={`${styles.cancelBtn}`} onClick={() => setSelectedModal('')}>
+               <button className={`${styles.cancelBtn}`} onClick={() => handleOpenModal('')}>
                   Cancel
                </button>
             </div>

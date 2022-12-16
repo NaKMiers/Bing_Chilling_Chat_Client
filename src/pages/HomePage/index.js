@@ -17,14 +17,15 @@ import { io } from 'socket.io-client'
 function HomePage() {
    const dispatch = useDispatch()
    const { user } = useSelector(state => state.userReducer.userData)
+   const curModal = useSelector(state => state.userReducer.curModal)
    const roomData = useSelector(state => state.roomReducer.roomData)
    const curRoom = useSelector(state => state.roomReducer.curRoom)
-   const [selectedModal, setSelectedModal] = useState('')
    const socket = useRef()
-   const [isConnectSocket, setConnectSocket] = useState(false)
 
+   const [isConnectSocket, setConnectSocket] = useState(false)
    const [sendMessage, setSendMessage] = useState(null)
    const [receivedMessage, setReceivedMessage] = useState(null)
+   const [hide, setHide] = useState('right')
 
    // Connect to socket.io
    useEffect(() => {
@@ -96,21 +97,21 @@ function HomePage() {
    }, [user, dispatch])
 
    const renderModals = () => {
-      switch (selectedModal) {
+      switch (curModal) {
          case 'profile':
-            return <ProfileModal setSelectedModal={setSelectedModal} />
+            return <ProfileModal />
          case 'change-password':
-            return <SecurityModal setSelectedModal={setSelectedModal} />
+            return <SecurityModal />
          case 'login':
-            return <LoginLogoutModal setSelectedModal={setSelectedModal} />
+            return <LoginLogoutModal />
          case 'new-room':
-            return <NewRoomModal socket={socket} setSelectedModal={setSelectedModal} />
+            return <NewRoomModal socket={socket} />
          case 'join-room':
-            return <JoinRoomModal socket={socket} setSelectedModal={setSelectedModal} />
+            return <JoinRoomModal socket={socket} />
          case 'edit-room':
-            return <EditRoomModal setSelectedModal={setSelectedModal} />
+            return <EditRoomModal />
          case 'change-room-password':
-            return <RoomSecurityModal setSelectedModal={setSelectedModal} />
+            return <RoomSecurityModal />
          default:
             return null
       }
@@ -118,10 +119,10 @@ function HomePage() {
 
    return (
       <div className={styles.homePage}>
-         <LeftSide hide />
+         <LeftSide hide={hide} setHide={setHide} />
          <RightSide
-            hide
-            setSelectedModal={setSelectedModal}
+            hide={hide}
+            setHide={setHide}
             setSendMessage={setSendMessage}
             receivedMessage={receivedMessage}
             socket={socket}

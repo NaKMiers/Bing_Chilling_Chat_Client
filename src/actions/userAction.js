@@ -10,6 +10,8 @@ const userAction = {
    logout: () => ({ type: 'LOGOUT' }),
 
    editProfile: data => ({ type: 'EDIT_PROFILE', payload: data }),
+
+   changeCurModal: data => ({ type: 'CHANGE_CUR_MODAL', payload: data }),
 }
 
 export default userAction

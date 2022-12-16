@@ -4,13 +4,18 @@ import styles from './NewRoomModal.module.scss'
 import roomApi from '../../apis/roomApi'
 import roomAction from '../../actions/roomAction'
 import validate from '../../Utils/validate'
+import userAction from '../../actions/userAction'
 
-function NewRoomModal({ socket, setSelectedModal }) {
+function NewRoomModal({ socket }) {
    const { user } = useSelector(state => state.userReducer.userData)
    const dispatch = useDispatch()
    const [formData, setFormData] = useState({ title: '', password: '' })
    const [security, setSecurity] = useState(false)
    const [errors, setErrors] = useState(null)
+
+   const handleOpenModal = value => {
+      dispatch(userAction.changeCurModal(value))
+   }
 
    const handleChange = e => {
       setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -26,7 +31,7 @@ function NewRoomModal({ socket, setSelectedModal }) {
          // add new room in socket.io
          socket.current.emit('user-add-new-room', { userId: user._id, roomId: res.data._id })
 
-         setSelectedModal(false)
+         handleOpenModal('')
       } catch (err) {
          console.log(err)
          dispatch(roomAction.createRoomFail())
@@ -97,7 +102,7 @@ function NewRoomModal({ socket, setSelectedModal }) {
 
             <div className={styles.buttonWrap}>
                <button className={`${styles.saveBtn} button`}>Create</button>
-               <button className={`${styles.cancelBtn}`} onClick={() => setSelectedModal('')}>
+               <button className={`${styles.cancelBtn}`} onClick={() => handleOpenModal('')}>
                   Cancel
                </button>
             </div>

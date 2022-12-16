@@ -11,3 +11,9 @@
    grid-template-rows: var(--navbar-height) auto;
    gap: var(--page-gap);
 }
+
+@media (max-width: 768px) {
+   .hide {
+      display: none;
+   }
+}

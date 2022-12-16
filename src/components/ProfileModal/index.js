@@ -9,7 +9,7 @@ import userApi from '../../apis/userApi'
 import userAction from '../../actions/userAction'
 import validate from '../../Utils/validate'
 
-function ProfileModal({ setSelectedModal }) {
+function ProfileModal() {
    const dispatch = useDispatch()
    const { user } = useSelector(state => state.userReducer.userData)
    const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER
@@ -30,6 +30,10 @@ function ProfileModal({ setSelectedModal }) {
       },
       [avatars]
    )
+
+   const handleOpenModal = value => {
+      dispatch(userAction.changeCurModal(value))
+   }
 
    const onUploadImage = e => {
       const imgFile = e.target.files[0]
@@ -71,7 +75,7 @@ function ProfileModal({ setSelectedModal }) {
       try {
          const res = await userApi.editProfile(user._id, userData)
          dispatch(userAction.editProfile(res.data))
-         setSelectedModal(false)
+         handleOpenModal('')
          setErrors(null)
       } catch (err) {
          console.log(err)
@@ -155,7 +159,7 @@ function ProfileModal({ setSelectedModal }) {
 
             <div className={styles.buttonWrap}>
                <button className={`${styles.saveBtn} button`}>Save</button>
-               <button className={`${styles.cancelBtn}`} onClick={() => setSelectedModal('')}>
+               <button className={`${styles.cancelBtn}`} onClick={() => handleOpenModal('')}>
                   Cancel
                </button>
             </div>

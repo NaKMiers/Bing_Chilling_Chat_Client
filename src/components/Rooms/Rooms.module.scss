@@ -26,3 +26,18 @@
       display: none;
    }
 }
+
+@media (max-width: 768px) {
+   .rooms {
+      --rooms-height: calc(
+         100vh - 2 * var(--navbar-height) - 2 * var(--page-padding) - 2 * var(--page-gap)
+      );
+   }
+
+   .rooms {
+      & > h3,
+      & > hr {
+         display: none;
+      }
+   }
+}

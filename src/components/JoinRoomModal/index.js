@@ -1,11 +1,12 @@
 import React, { memo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import roomAction from '../../actions/roomAction'
+import userAction from '../../actions/userAction'
 import roomApi from '../../apis/roomApi'
 import validate from '../../Utils/validate'
 import styles from './JoinRoomModal.module.scss'
 
-function JoinRoomModal({ socket, setSelectedModal }) {
+function JoinRoomModal({ socket }) {
    const dispatch = useDispatch()
    const { user } = useSelector(state => state.userReducer.userData)
 
@@ -13,6 +14,10 @@ function JoinRoomModal({ socket, setSelectedModal }) {
    const [password, setPassword] = useState('')
    const [security, setSecurity] = useState(true)
    const [errors, setErrors] = useState(null)
+
+   const handleOpenModal = value => {
+      dispatch(userAction.changeCurModal(value))
+   }
 
    const handleJoinRoom = async () => {
       // join room in server
@@ -24,7 +29,7 @@ function JoinRoomModal({ socket, setSelectedModal }) {
          console.log('join room in socket.io: ', { userJoinId: user._id, roomId })
          socket.current.emit('join-room', { userJoinId: user._id, roomId })
 
-         setSelectedModal(false)
+         handleOpenModal('')
       } catch (err) {
          console.log(err)
          if (err.response.status === 500) {
@@ -102,7 +107,7 @@ function JoinRoomModal({ socket, setSelectedModal }) {
 
             <div className={styles.buttonWrap}>
                <button className={`${styles.saveBtn} button`}>Join</button>
-               <button className={`${styles.cancelBtn}`} onClick={() => setSelectedModal('')}>
+               <button className={`${styles.cancelBtn}`} onClick={() => handleOpenModal('')}>
                   Cancel
                </button>
             </div>

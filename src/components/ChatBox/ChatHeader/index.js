@@ -2,10 +2,11 @@ import { UilCheck, UilCopy, UilEllipsisV } from '@iconscout/react-unicons'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import roomAction from '../../../actions/roomAction'
+import userAction from '../../../actions/userAction'
 import roomApi from '../../../apis/roomApi'
 import styles from './ChatHeader.module.scss'
 
-function ChatHeader({ socket, setSelectedModal }) {
+function ChatHeader({ socket }) {
    const dispatch = useDispatch()
    const { user } = useSelector(state => state.userReducer.userData)
    const curRoom = useSelector(state => state.roomReducer.curRoom)
@@ -28,7 +29,7 @@ function ChatHeader({ socket, setSelectedModal }) {
    }
 
    const handleSelectedModal = value => {
-      setSelectedModal(value)
+      dispatch(userAction.changeCurModal(value))
       setShowMenu(false)
    }
 
@@ -91,6 +92,7 @@ function ChatHeader({ socket, setSelectedModal }) {
                >
                   Security
                </div>
+               <div className={styles.menuItem}>Blocks</div>
                <div className={styles.menuItem} onClick={handleLeave}>
                   Leave
                </div>

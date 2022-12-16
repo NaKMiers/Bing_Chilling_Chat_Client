@@ -64,7 +64,7 @@
    padding: 0.5rem 0;
    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1);
 
-   & > div:nth-of-type(4) {
+   & > div:last-child {
       color: orangered;
    }
 }

@@ -7,6 +7,7 @@ function Message({ message, own }, ref) {
    const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER
    const [showTime, setShowTime] = useState(false)
    const [user, setUser] = useState('')
+   const [showMenu, setShowMenu] = useState(false)
 
    useEffect(() => {
       const getUser = async () => {
@@ -25,10 +26,17 @@ function Message({ message, own }, ref) {
       <div className={`${styles.message} ${own ? styles.own : ''}`} ref={ref}>
          <>
             <img
-               className={styles.image}
                src={serverPublic + (user.avatar || 'defaultAvatar.png')}
                alt='avatar'
+               onDoubleClick={() => setShowMenu(true)}
+               onClick={() => setShowMenu(false)}
             />
+
+            {showMenu && (
+               <div className={styles.menus}>
+                  <div className={styles.menuItem}>Blocks</div>
+               </div>
+            )}
 
             <div className={styles.messageContent}>
                <span

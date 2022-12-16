@@ -7,7 +7,7 @@ import styles from './ChatBox.module.scss'
 import ChatHeader from './ChatHeader'
 import Message from './Message'
 
-function ChatBox({ socket, setSelectedModal, setSendMessage, receivedMessage }) {
+function ChatBox({ socket, setSendMessage, receivedMessage }) {
    const { user } = useSelector(state => state.userReducer.userData)
    const curRoom = useSelector(state => state.roomReducer.curRoom)
    const scrollRef = useRef()
@@ -92,7 +92,7 @@ function ChatBox({ socket, setSelectedModal, setSendMessage, receivedMessage }) 
       <div className={`${styles.chatbox} ${imagePreviews.length ? styles.chatBoxResize : ''}`}>
          {curRoom ? (
             <>
-               <ChatHeader setSelectedModal={setSelectedModal} socket={socket} />
+               <ChatHeader socket={socket} />
 
                <div
                   className={`${styles.chatBody} ${imagePreviews.length ? styles.chatBodyResize : ''}`}
