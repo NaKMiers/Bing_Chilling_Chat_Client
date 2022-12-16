@@ -2,6 +2,24 @@
    display: grid;
    grid-template-columns: 20% auto;
    height: 100vh;
-   gap: 1rem;
-   padding: 1rem;
+   gap: var(--page-gap);
+   padding: var(--page-padding);
+}
+
+@media (max-width: 1024px) {
+   .homePage {
+      grid-template-columns: 30% auto;
+   }
+}
+
+@media (max-width: 768px) {
+   .homePage {
+      grid-template-columns: 100%;
+   }
+}
+
+@media (max-width: 640px) {
+   .homePage {
+      grid-template-columns: 100%;
+   }
 }

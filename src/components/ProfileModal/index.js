@@ -143,9 +143,9 @@ function ProfileModal({ setSelectedModal }) {
                >
                   <UilPlus />
                   <input
+                     style={{ display: 'none' }}
                      type='file'
                      ref={fileRef}
-                     style={{ display: 'none' }}
                      onChange={onUploadImage}
                   />
                </div>

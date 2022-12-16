@@ -1,14 +1,19 @@
+.chatbox {
+   display: grid;
+   grid-template-rows: var(--chat-header-height) auto var(--send-box-height);
+   background: var(--opacity-bg);
+   border-radius: 1rem;
+}
+.chatBoxResize {
+   grid-template-rows: var(--chat-header-height) auto calc(
+         var(--send-box-height) + var(--send-box-preview-height)
+      );
+}
+
 .image {
    width: 40px;
    height: 40px;
    border-radius: 50%;
-}
-
-.chatbox {
-   display: grid;
-   grid-template-rows: auto 60vh auto;
-   background: var(--opacity-bg);
-   border-radius: 1rem;
 }
 
 // Chat Body
@@ -18,10 +23,13 @@
    padding: 1rem;
    gap: 2px;
    overflow: scroll;
-
+   height: var(--chat-body-height);
    &::-webkit-scrollbar {
       display: none;
    }
+}
+.chatBodyResize {
+   height: calc(var(--chat-body-height) - var(--send-box-preview-height));
 }
 
 .chatSendBox {
@@ -30,20 +38,20 @@
    flex-direction: column;
    justify-content: center;
    align-items: center;
+   height: 100%;
    width: 100%;
 
    & > div:nth-of-type(1) {
-      --wrap-height: 6rem;
-      display: flex;
-      gap: 1rem;
+      position: relative;
+      gap: var(--page-gap);
       width: 100%;
-      height: var(--wrap-height);
+      height: var(--send-box-preview-height);
       padding: 0.5rem 1rem;
       background: rgba(255, 255, 255, 0.2);
       overflow-x: scroll;
 
       &::-webkit-scrollbar {
-         // display: none;
+         display: none;
       }
    }
 
@@ -52,14 +60,15 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      height: var(--send-box-height);
       width: 100%;
-      padding: 0.6rem 1rem;
+      padding: 0rem 1rem;
    }
 }
 
 .imagePreview {
    position: relative;
-   width: calc(var(--wrap-height) - 1rem);
+   width: calc(var(--send-box-preview-height) - 1rem);
    height: 100%;
    border-radius: 0.5rem;
    background-size: cover;
@@ -84,6 +93,15 @@
          height: 60%;
       }
    }
+}
+
+.clearAllIcon {
+   position: absolute;
+   right: 1rem;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   height: calc(var(--send-box-preview-height) - 1rem);
 }
 
 .menus {

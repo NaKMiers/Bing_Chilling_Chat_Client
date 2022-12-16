@@ -114,9 +114,7 @@ function reducer(state = initState, action) {
          return {
             ...state,
             roomData: state.roomData.map((room, i) =>
-               index === i
-                  ? { ...room, members: room.members.filter(id => id !== userLeaveId) }
-                  : room
+               index === i ? { ...room, members: room.members.filter(id => id !== userLeaveId) } : room
             ),
             curRoom:
                state.curRoom?._id === roomId
@@ -161,6 +159,10 @@ function reducer(state = initState, action) {
       case 'SET_CUR_ROOM':
          localStorage.setItem('cur-room', JSON.stringify(action.payload))
          return { ...state, curRoom: action.payload }
+
+      case 'CLEAR_CUR_ROOM':
+         localStorage.removeItem('cur-room')
+         return { ...state, curRoom: null }
 
       case 'CLEAR_ALL':
          return {

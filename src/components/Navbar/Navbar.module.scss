@@ -1,10 +1,10 @@
 .navbar {
    position: relative;
    display: flex;
-   height: 40px;
    justify-content: space-between;
    align-items: center;
    gap: 1rem;
+   height: 40px;
    padding-right: 1rem;
    color: #fff;
 }
@@ -20,9 +20,24 @@
    justify-content: center;
    align-items: center;
    gap: 1rem;
+   height: 100%;
 
    & > span {
       margin-left: -4px;
+   }
+}
+
+.navIcon {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   height: 100%;
+   cursor: pointer;
+
+   &:nth-of-type(1) {
+      display: none;
+      width: 2rem;
    }
 }
 
@@ -30,11 +45,15 @@
    width: 40px;
    height: 40px;
    border-radius: 50%;
+
+   &:nth-of-type(2) {
+      display: none;
+   }
 }
 
 .menus {
    position: absolute;
-   top: 82%;
+   top: 2.3rem;
    right: 0;
    background: var(--white);
    border-radius: 0.5rem;
@@ -62,4 +81,45 @@
    width: 50px;
    height: 34px;
    font-size: 16px;
+}
+
+@media (max-width: 1024px) {
+}
+
+@media (max-width: 768px) {
+   .navbar {
+      flex-direction: row-reverse;
+   }
+
+   .navIcon {
+      &:nth-of-type(1) {
+         display: flex;
+      }
+      &:nth-of-type(2) {
+         display: none;
+      }
+   }
+
+   .image {
+      &:nth-of-type(1) {
+         display: none;
+      }
+      &:nth-of-type(2) {
+         display: block;
+         cursor: pointer;
+      }
+   }
+
+   .menus {
+      top: 3.5rem;
+   }
+}
+
+@media (max-width: 640px) {
+}
+
+@media (max-width: 480px) {
+   .navRight > span {
+      display: none;
+   }
 }

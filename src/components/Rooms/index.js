@@ -16,11 +16,13 @@ function Rooms({ rooms }) {
          <h3>Rooms</h3>
          <hr />
 
-         {rooms?.map((room, index) => (
-            <div key={room._id} onClick={() => setCurRoom(room)}>
-               <Room room={room} />
-            </div>
-         ))}
+         <div className={styles.roomContainer}>
+            {rooms?.map((room, index) => (
+               <div key={room._id} onClick={() => setCurRoom(room)}>
+                  <Room room={room} />
+               </div>
+            ))}
+         </div>
       </div>
    )
 }

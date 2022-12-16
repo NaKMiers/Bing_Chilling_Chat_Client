@@ -1,8 +1,7 @@
 import React, { memo, useEffect, useRef, useState } from 'react'
+import { UilImagePlus, UilTimes, UilTrashAlt } from '@iconscout/react-unicons'
 import InputEmoji from 'react-input-emoji'
 import { useSelector } from 'react-redux'
-import { UilImagePlus } from '@iconscout/react-unicons'
-import { UilTimes } from '@iconscout/react-unicons'
 import messageApi from '../../apis/messageApi'
 import styles from './ChatBox.module.scss'
 import ChatHeader from './ChatHeader'
@@ -12,10 +11,18 @@ function ChatBox({ socket, setSelectedModal, setSendMessage, receivedMessage }) 
    const { user } = useSelector(state => state.userReducer.userData)
    const curRoom = useSelector(state => state.roomReducer.curRoom)
    const scrollRef = useRef()
+   const fileRef = useRef()
 
    const [messages, setMessages] = useState([])
    const [newMessage, setNewMessage] = useState('')
    const [showAddMenu, setShowAddMenu] = useState(false)
+   const [showPreviewBox, setShowPreviewBox] = useState(false)
+
+   const [images, setImages] = useState([])
+   const [imagePreviews, setImagePreviews] = useState([])
+
+   console.log(images)
+   console.log(imagePreviews)
 
    // Sroll to bottom
    useEffect(() => {
@@ -45,6 +52,23 @@ function ChatBox({ socket, setSelectedModal, setSendMessage, receivedMessage }) 
       }
    }, [receivedMessage, curRoom?._id])
 
+   const onUploadImage = e => {
+      const files = e.target.files
+      let max = files.length <= 6 ? files.length : 6
+      if (files.length > 6) {
+         alert('Only 6 files are accepted')
+      }
+
+      const imageList = []
+      const imagePreviewList = []
+      for (let i = 0; i < max; i++) {
+         imageList.push(files[i])
+         imagePreviewList.push(URL.createObjectURL(files[i]))
+      }
+      setImagePreviews(imagePreviewList)
+      setImages(imageList)
+   }
+
    const handleSendMessage = async () => {
       const message = { senderId: user._id, text: newMessage, roomId: curRoom._id }
 
@@ -65,15 +89,15 @@ function ChatBox({ socket, setSelectedModal, setSendMessage, receivedMessage }) 
    }
 
    return (
-      <div className={styles.chatbox}>
+      <div className={`${styles.chatbox} ${imagePreviews.length ? styles.chatBoxResize : ''}`}>
          {curRoom ? (
             <>
                <ChatHeader setSelectedModal={setSelectedModal} socket={socket} />
 
-               <div className={styles.chatBody}>
-                  {messages.length === 0 && (
-                     <p className={styles.messageEmpty}>Message is empty.</p>
-                  )}
+               <div
+                  className={`${styles.chatBody} ${imagePreviews.length ? styles.chatBodyResize : ''}`}
+               >
+                  {messages.length === 0 && <p className={styles.messageEmpty}>Message is empty.</p>}
                   {messages.map((message, index) => (
                      <Message
                         key={index}
@@ -85,17 +109,32 @@ function ChatBox({ socket, setSelectedModal, setSendMessage, receivedMessage }) 
                </div>
 
                <div className={styles.chatSendBox}>
-                  <div>
-                     <div
-                        className={styles.imagePreview}
-                        style={{ backgroundImage: 'url(https://bom.so/eeqLI2)' }}
-                     >
-                        <div>
-                           <UilTimes />
+                  <div style={{ display: imagePreviews.length ? 'flex' : 'none' }}>
+                     {imagePreviews.map(image => (
+                        <div
+                           key={image}
+                           className={styles.imagePreview}
+                           style={{ backgroundImage: `url(${image})` }}
+                        >
+                           <div
+                              onClick={() => setImagePreviews(prev => prev.filter(img => img !== image))}
+                           >
+                              <UilTimes />
+                           </div>
                         </div>
+                     ))}
+                     <div className={`${styles.clearAllIcon} icon`} onClick={() => setImagePreviews([])}>
+                        <UilTrashAlt />
                      </div>
                   </div>
                   <div>
+                     <input
+                        style={{ display: 'none' }}
+                        type='file'
+                        ref={fileRef}
+                        multiple
+                        onChange={onUploadImage}
+                     />
                      <button
                         className={`${styles.plusBtn} button`}
                         onClick={() => setShowAddMenu(!showAddMenu)}
@@ -104,7 +143,13 @@ function ChatBox({ socket, setSelectedModal, setSendMessage, receivedMessage }) 
                      </button>
                      {showAddMenu && (
                         <div className={styles.menus}>
-                           <div className={styles.menuItem}>
+                           <div
+                              className={styles.menuItem}
+                              onClick={() => {
+                                 setShowAddMenu(false)
+                                 fileRef.current.click()
+                              }}
+                           >
                               <UilImagePlus />
                               Image
                            </div>

@@ -1,5 +1,4 @@
 :root {
-   /* --gradient-bg: radial-gradient(90deg, #333, #f44336, #ddd, #f44336, #333); */
    --gradient-bg: radial-gradient(#aaa, #f44336,#aaa, #f44336, #333);
    --opacity-bg: rgba(255, 255, 255, 0.7);
    --primary: linear-gradient(120deg, #e51937, orangered);
@@ -11,6 +10,10 @@
    --old: linear-gradient(120deg, rgb(201, 198, 198), rgb(168, 156, 156));
    --hover: #fff;
    --hover-dark: #eee;
+
+   --page-padding: 1rem;
+   --page-gap: 1rem;
+   --navbar-height: 2.5rem;
 }
 
 
@@ -51,4 +54,10 @@ hr {
    background: var(--white);
    color: #333;
    border: 2px solid var(--primary);
+}
+
+.icon:hover {
+   cursor: pointer;
+   transform: scale(1.2);
+   transition: all ease-in 0.1s;
 }

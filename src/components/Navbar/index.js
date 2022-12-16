@@ -1,6 +1,6 @@
-import { UilBars } from '@iconscout/react-unicons'
 import React, { memo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { UilBars, UilAngleLeftB } from '@iconscout/react-unicons'
 import userAction from '../../actions/userAction'
 import roomAction from '../../actions/roomAction'
 import styles from './Navbar.module.scss'
@@ -39,16 +39,28 @@ function Navbar({ setSelectedModal }) {
             </button>
          </div>
          <div className={styles.navRight}>
+            <div className={`${styles.navIcon} icon`}>
+               <UilAngleLeftB />
+            </div>
+
             {user && (
-               <img
-                  className={styles.image}
-                  src={serverPublic + (user.avatar || 'defaultAvatar.png')}
-                  alt='avatar'
-               />
+               <>
+                  <img
+                     className={styles.image}
+                     src={serverPublic + (user.avatar || 'defaultAvatar.png')}
+                     alt='avatar'
+                  />
+                  <img
+                     className={styles.image}
+                     src={serverPublic + (user.avatar || 'defaultAvatar.png')}
+                     alt='avatar'
+                     onClick={() => setShowMenu(!showMenu)}
+                  />
+               </>
             )}
             <span>{user?.username}</span>
 
-            <div onClick={() => setShowMenu(!showMenu)} style={{ cursor: 'pointer' }}>
+            <div className={`${styles.navIcon} icon`} onClick={() => setShowMenu(!showMenu)}>
                <UilBars />
             </div>
 

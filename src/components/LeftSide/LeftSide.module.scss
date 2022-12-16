@@ -52,17 +52,11 @@
    }
 }
 
-.rooms {
-   text-align: center;
-   background: var(--white);
-   height: 100%;
-   overflow: scroll;
-   border-radius: 1rem;
-   &::-webkit-scrollbar {
-      display: none;
-   }
+@media (max-width: 1024px) {
+}
 
-   & > h3 {
-      padding: 0.8rem 1rem;
-   }
+@media (max-width: 768px) {
+   // .leftSide {
+   //    display: none;
+   // }
 }

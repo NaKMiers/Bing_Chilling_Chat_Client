@@ -1,15 +1,28 @@
 .rooms {
-   text-align: center;
+   --rooms-header-height: 3rem;
+   --rooms-container-height: calc(100% - var(--rooms-header-height));
+   --rooms-height: calc(100vh - var(--navbar-height) - 2 * var(--page-padding) - var(--page-gap));
+
    background: var(--white);
    background: var(--opacity-bg);
-   height: 100%;
-   overflow: scroll;
+   height: var(--rooms-height);
+   overflow: hidden;
    border-radius: 1rem;
    &::-webkit-scrollbar {
       display: none;
    }
 
    & > h3 {
-      padding: 0.8rem 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: var(--rooms-header-height);
+   }
+}
+.roomContainer {
+   height: var(--rooms-container-height);
+   overflow: scroll;
+   &::-webkit-scrollbar {
+      display: none;
    }
 }

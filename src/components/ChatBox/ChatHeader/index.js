@@ -64,7 +64,7 @@ function ChatHeader({ socket, setSelectedModal }) {
             </div>
          </div>
 
-         <div onClick={handleShowMenu} style={{ cursor: 'pointer' }}>
+         <div className={`${styles.menuIcon} icon`} onClick={handleShowMenu}>
             <UilEllipsisV />
          </div>
 

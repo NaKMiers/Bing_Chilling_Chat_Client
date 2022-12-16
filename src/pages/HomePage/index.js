@@ -118,8 +118,9 @@ function HomePage() {
 
    return (
       <div className={styles.homePage}>
-         <LeftSide />
+         <LeftSide hide />
          <RightSide
+            hide
             setSelectedModal={setSelectedModal}
             setSendMessage={setSendMessage}
             receivedMessage={receivedMessage}

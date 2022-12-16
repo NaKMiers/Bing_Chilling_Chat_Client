@@ -23,6 +23,7 @@ const roomAction = {
    editRoomFail: () => ({ type: 'EDIT_FAIL' }),
 
    setCurRoom: data => ({ type: 'SET_CUR_ROOM', payload: data }),
+   clearCurRoom: () => ({ type: 'CLEAR_CUR_ROOM' }),
 
    clearAll: () => ({ type: 'CLEAR_ALL' }),
 }

@@ -1,5 +1,13 @@
 .rightSide {
-   display: flex;
-   flex-direction: column;
-   gap: 1rem;
+   --chat-header-height: 5rem;
+   --send-box-height: 5rem;
+   --send-box-preview-height: 6rem;
+   --chat-body-height: calc(
+      100vh - 2 * var(--page-padding) - var(--page-gap) - var(--navbar-height) -
+         var(--chat-header-height) - var(--send-box-height)
+   );
+
+   display: grid;
+   grid-template-rows: var(--navbar-height) auto;
+   gap: var(--page-gap);
 }
