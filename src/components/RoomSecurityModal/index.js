@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { memo, useState } from 'react'
 import { useSelector } from 'react-redux'
 import roomApi from '../../apis/roomApi'
 import styles from './RoomSecurityModal.module.scss'
+import validate from '../../Utils/validate'
 
 function RoomSecurityModal({ setSelectedModal }) {
    const { user } = useSelector(state => state.userReducer.userData)
@@ -9,10 +10,9 @@ function RoomSecurityModal({ setSelectedModal }) {
 
    const [security, setSecurity] = useState(true)
    const [newPassword, setNewPassword] = useState('')
+   const [errors, setErrors] = useState(null)
 
-   const hanleSubmit = async e => {
-      e.preventDefault()
-
+   const handleChangeRoomPassword = async () => {
       try {
          await roomApi.changePassword(curRoom._id, {
             userId: user._id,
@@ -21,6 +21,24 @@ function RoomSecurityModal({ setSelectedModal }) {
          setSelectedModal(false)
       } catch (err) {
          console.log(err)
+      }
+   }
+
+   const hanleSubmit = e => {
+      e.preventDefault()
+
+      let errorChecks = { newPassword: false }
+      if (security) {
+         if (!validate.required(newPassword)) {
+            errorChecks.newPassword = true
+            setErrors(prev => ({ ...prev, newPassword: 'New password is required' }))
+         }
+         if (!validate.checkErrors(errorChecks)) {
+            handleChangeRoomPassword()
+            setErrors(null)
+         }
+      } else {
+         handleChangeRoomPassword()
       }
    }
 
@@ -36,18 +54,21 @@ function RoomSecurityModal({ setSelectedModal }) {
                   type='checkbox'
                   name='security'
                   onChange={() => setSecurity(!security)}
+                  onFocus={() => setErrors(prev => ({ ...prev, newPassword: '' }))}
                />
             </div>
 
             {security && (
                <input
-                  className={styles.usernameInput}
+                  className={styles.formInput}
                   type='password'
                   placeholder='New Password...'
                   value={newPassword}
                   onChange={e => setNewPassword(e.target.value)}
+                  onFocus={() => setErrors(prev => ({ ...prev, newPassword: '' }))}
                />
             )}
+            {errors?.newPassword && <p className={styles.inputError}>{errors.newPassword}</p>}
 
             <div className={styles.buttonWrap}>
                <button className={`${styles.saveBtn} button`}>Save</button>
@@ -60,4 +81,4 @@ function RoomSecurityModal({ setSelectedModal }) {
    )
 }
 
-export default RoomSecurityModal
+export default memo(RoomSecurityModal)

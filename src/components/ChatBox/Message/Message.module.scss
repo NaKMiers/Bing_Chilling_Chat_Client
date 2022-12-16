@@ -16,7 +16,7 @@
 .messageContent {
    display: flex;
    flex-direction: column;
-   color: #fff;
+   color: var(--white);
    margin: 0px 0.5rem;
 
    & > span:nth-of-type(1) {

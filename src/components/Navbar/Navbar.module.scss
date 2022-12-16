@@ -1,9 +1,3 @@
-.image {
-   width: 40px;
-   height: 40px;
-   border-radius: 50%;
-}
-
 .navbar {
    position: relative;
    display: flex;
@@ -12,6 +6,7 @@
    align-items: center;
    gap: 1rem;
    padding-right: 1rem;
+   color: #fff;
 }
 
 .navLeft {
@@ -31,15 +26,22 @@
    }
 }
 
+.image {
+   width: 40px;
+   height: 40px;
+   border-radius: 50%;
+}
+
 .menus {
    position: absolute;
    top: 82%;
    right: 0;
-   background: #fff;
+   background: var(--white);
    border-radius: 0.5rem;
    padding: 0.5rem 0;
    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1);
    z-index: 1;
+   color: #333;
 
    & > div:nth-of-type(3) {
       color: orangered;
@@ -52,7 +54,7 @@
    padding: 0.5rem 1.5rem;
 
    &:hover {
-      background: #eee;
+      background: var(--hover-dark);
    }
 }
 

@@ -23,6 +23,7 @@
    border: none;
    outline: none;
    font-size: 14px;
+   background: var(--opacity-bg);
 }
 
 .searchBtn {
@@ -36,8 +37,8 @@
    width: 28px;
    height: 28px;
    border-radius: 0.3rem;
-   color: #fff;
-   background: orangered;
+   color: var(--white);
+   background: var(--primary);
    cursor: pointer;
 
    & > svg {

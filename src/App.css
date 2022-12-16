@@ -1,3 +1,19 @@
+:root {
+   /* --gradient-bg: radial-gradient(90deg, #333, #f44336, #ddd, #f44336, #333); */
+   --gradient-bg: radial-gradient(#aaa, #f44336,#aaa, #f44336, #333);
+   --opacity-bg: rgba(255, 255, 255, 0.7);
+   --primary: linear-gradient(120deg, #e51937, orangered);
+   --secondary: linear-gradient(180deg, rgb(245, 211, 211), rgb(239, 180, 157));
+   --white: #fff;
+   --hr: #ececec;
+   --border-light: #fff;
+   --border-dark: #333; 
+   --old: linear-gradient(120deg, rgb(201, 198, 198), rgb(168, 156, 156));
+   --hover: #fff;
+   --hover-dark: #eee;
+}
+
+
 * {
    box-sizing: border-box;
    margin: 0;
@@ -11,13 +27,13 @@ body {
 .App {
    overflow: hidden;
    color: #333;
-   background: #f3f3f3
+   background: var(--gradient-bg);
 }
 
 hr {
    width: 85%;
    height: 1px;
-   border: 0.1px solid #ececec;
+   border: 0.1px solid var(--hr);
    margin: 0px auto;
 }
 
@@ -25,14 +41,14 @@ hr {
    width: 30px;
    height: 30px;
    border-radius: 0.5rem;
-   color: #fff;
-   background: orangered;
-   border: 0;
+   color: var(--white);
+   background: var(--primary);
+   border: 2px solid var(--border-light);
 }
 
 .button:hover {
    cursor: pointer;
-   background-color: #fff;
+   background: var(--white);
    color: #333;
-   border: 2px solid orangered;
+   border: 2px solid var(--primary);
 }

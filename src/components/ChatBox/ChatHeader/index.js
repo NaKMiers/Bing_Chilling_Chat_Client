@@ -1,9 +1,9 @@
 import { UilCheck, UilCopy, UilEllipsisV } from '@iconscout/react-unicons'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import styles from './ChatHeader.module.scss'
 import roomAction from '../../../actions/roomAction'
 import roomApi from '../../../apis/roomApi'
+import styles from './ChatHeader.module.scss'
 
 function ChatHeader({ socket, setSelectedModal }) {
    const dispatch = useDispatch()

@@ -1,5 +1,5 @@
 const initState = {
-   roomData: JSON.parse(localStorage.getItem('room-data')) || [],
+   roomData: JSON.parse(localStorage.getItem('room-data')) || null,
    curRoom: JSON.parse(localStorage.getItem('cur-room')) || null,
    loading: false,
    error: false,
@@ -14,25 +14,18 @@ const findIndex = (array, id) => {
 }
 
 function reducer(state = initState, action) {
-   let roomData = []
+   let roomData = null
    let curRoom
    let index = -1
    let userJoinId = action.payload?.userJoinId
    let userLeaveId = action.payload?.userLeaveId
-   let curRoomId = action.payload?.curRoomId
    let roomId = action.payload?.roomId
 
    switch (action.type) {
-      case 'GET_ALL_ROOMS_START':
-         return { ...state, loading: true, error: false }
       case 'GET_ALL_ROOMS_SUCCESS':
          localStorage.setItem('room-data', JSON.stringify(action.payload))
          return { ...state, roomData: action.payload, loading: false, error: false }
-      case 'GET_ALL_ROOMS_FAIL':
-         return { ...state, loading: false, error: true }
 
-      case 'CREATE_ROOM_START':
-         return { ...state, loading: true, error: false }
       case 'CREATE_ROOM_SUCCESS':
          roomData = JSON.parse(localStorage.getItem('room-data'))
          localStorage.setItem('room-data', JSON.stringify([action.payload, ...roomData]))
@@ -42,11 +35,7 @@ function reducer(state = initState, action) {
             loading: false,
             error: false,
          }
-      case 'CREATE_ROOM_FAIL':
-         return { ...state, loading: false, error: true }
 
-      case 'JOIN_ROOM_START':
-         return { ...state, loading: true, error: false }
       case 'JOIN_ROOM_SUCCESS':
          roomData = JSON.parse(localStorage.getItem('room-data'))
          localStorage.setItem('room-data', JSON.stringify([action.payload, ...roomData]))
@@ -56,13 +45,10 @@ function reducer(state = initState, action) {
             loading: false,
             error: false,
          }
-      case 'JOIN_ROOM_FAIL':
-         return { ...state, loading: false, error: true }
 
       case 'ANOTHER_USER_JOIN_ROOM':
          userJoinId = action.payload.userJoinId
          roomId = action.payload.roomId
-         curRoomId = action.payload.curRoomId
          index = findIndex(state.roomData, roomId)
          roomData = JSON.parse(localStorage.getItem('room-data'))
          curRoom = JSON.parse(localStorage.getItem('cur-room'))
@@ -79,7 +65,7 @@ function reducer(state = initState, action) {
          localStorage.setItem(
             'cur-room',
             JSON.stringify(
-               curRoomId === roomId
+               state.curRoom?._id === roomId
                   ? { ...curRoom, members: [...curRoom.members, userJoinId] }
                   : curRoom
             )
@@ -91,7 +77,7 @@ function reducer(state = initState, action) {
                index === i ? { ...room, members: [...room.members, userJoinId] } : room
             ),
             curRoom:
-               curRoomId === roomId
+               state.curRoom?._id === roomId
                   ? { ...state.curRoom, members: [...state.curRoom.members, userJoinId] }
                   : state.curRoom,
             loading: false,
@@ -101,7 +87,6 @@ function reducer(state = initState, action) {
       case 'ANOTHER_USER_LEAVE_ROOM':
          userLeaveId = action.payload.userLeaveId
          roomId = action.payload.roomId
-         curRoomId = action.payload.curRoomId
          index = findIndex(state.roomData, roomId)
          roomData = JSON.parse(localStorage.getItem('room-data'))
          curRoom = JSON.parse(localStorage.getItem('cur-room'))
@@ -120,7 +105,7 @@ function reducer(state = initState, action) {
          localStorage.setItem(
             'cur-room',
             JSON.stringify(
-               curRoomId === roomId
+               state.curRoom?._id === roomId
                   ? { ...curRoom, members: curRoom.members.filter(id => id !== userLeaveId) }
                   : curRoom
             )
@@ -134,7 +119,7 @@ function reducer(state = initState, action) {
                   : room
             ),
             curRoom:
-               curRoomId === roomId
+               state.curRoom?._id === roomId
                   ? {
                        ...state.curRoom,
                        members: state.curRoom.members.filter(id => id !== userLeaveId),
@@ -144,8 +129,6 @@ function reducer(state = initState, action) {
             error: false,
          }
 
-      case 'LEAVE_START':
-         return { ...state, loading: true, error: false }
       case 'LEAVE_SUCCESS':
          roomData = JSON.parse(localStorage.getItem('room-data'))
          localStorage.setItem(
@@ -160,11 +143,7 @@ function reducer(state = initState, action) {
             loading: false,
             error: false,
          }
-      case 'LEAVE_FAIL':
-         return { ...state, loading: false, error: true }
 
-      case 'EDIT_START':
-         return { ...state, loading: true, error: false }
       case 'EDIT_SUCCESS':
          index = findIndex(state.roomData, action.payload._id)
          roomData = JSON.parse(localStorage.getItem('room-data'))
@@ -178,8 +157,6 @@ function reducer(state = initState, action) {
             loading: false,
             error: false,
          }
-      case 'EDIT_FAIL':
-         return { ...state, loading: false, error: true }
 
       case 'SET_CUR_ROOM':
          localStorage.setItem('cur-room', JSON.stringify(action.payload))
@@ -187,7 +164,7 @@ function reducer(state = initState, action) {
 
       case 'CLEAR_ALL':
          return {
-            roomData: [],
+            roomData: null,
             curRoom: null,
             loading: false,
             error: false,

@@ -1,11 +1,13 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { UilSearch } from '@iconscout/react-unicons'
 import styles from './LogoSearch.module.scss'
 
 function LogoSearch({ searchValue, setSearchValue }) {
+   const serverPubcic = process.env.REACT_APP_PUBLIC_FOLDER
+
    return (
       <div className={styles.logoSearch}>
-         <img className={styles.logo} src='https://bom.so/FWOSVO' alt='logo' />
+         <img className={styles.logo} src={serverPubcic + 'logo.png'} alt='logo' />
          <div className={styles.inputWrap}>
             <input
                className={styles.searchInput}
@@ -22,4 +24,4 @@ function LogoSearch({ searchValue, setSearchValue }) {
    )
 }
 
-export default LogoSearch
+export default memo(LogoSearch)

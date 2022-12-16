@@ -1,6 +1,7 @@
 .rooms {
    text-align: center;
-   background: #fff;
+   background: var(--white);
+   background: var(--opacity-bg);
    height: 100%;
    overflow: scroll;
    border-radius: 1rem;

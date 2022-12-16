@@ -10,7 +10,7 @@
    display: flex;
    justify-content: space-between;
    padding: 1rem;
-   border-bottom: 2px solid #ececec;
+   border-bottom: 2px solid var(--hr);
 }
 
 .curChat {
@@ -55,7 +55,7 @@
    position: absolute;
    top: 60%;
    right: 0;
-   background: #fff;
+   background: var(--white);
    border-radius: 0.5rem;
    padding: 0.5rem 0;
    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1);
@@ -75,7 +75,7 @@
    text-overflow: ellipsis;
 
    &:hover {
-      background: #eee;
+      background: var(--hover-dark);
    }
 
    &:nth-of-type(1) {

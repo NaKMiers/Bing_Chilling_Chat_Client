@@ -1,6 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { memo, useEffect, useRef, useState } from 'react'
 import InputEmoji from 'react-input-emoji'
 import { useSelector } from 'react-redux'
+import { UilImagePlus } from '@iconscout/react-unicons'
+import { UilTimes } from '@iconscout/react-unicons'
 import messageApi from '../../apis/messageApi'
 import styles from './ChatBox.module.scss'
 import ChatHeader from './ChatHeader'
@@ -13,6 +15,7 @@ function ChatBox({ socket, setSelectedModal, setSendMessage, receivedMessage }) 
 
    const [messages, setMessages] = useState([])
    const [newMessage, setNewMessage] = useState('')
+   const [showAddMenu, setShowAddMenu] = useState(false)
 
    // Sroll to bottom
    useEffect(() => {
@@ -20,10 +23,6 @@ function ChatBox({ socket, setSelectedModal, setSendMessage, receivedMessage }) 
          scrollRef.current.scrollIntoView({ behavior: 'smooth' })
       }
    }, [messages, curRoom])
-
-   const scrollIntoView = () => {
-      scrollRef.current?.scrollIntoView({ behavior: 'smooth' })
-   }
 
    // Get all messages
    useEffect(() => {
@@ -51,6 +50,7 @@ function ChatBox({ socket, setSelectedModal, setSendMessage, receivedMessage }) 
 
       // Send message to socket.io
       const receiverIds = curRoom.members.filter(id => id !== user._id)
+      console.log('receiverIds: ', receiverIds)
       setSendMessage({ ...message, receiverIds })
 
       // Send message to database
@@ -71,6 +71,9 @@ function ChatBox({ socket, setSelectedModal, setSendMessage, receivedMessage }) 
                <ChatHeader setSelectedModal={setSelectedModal} socket={socket} />
 
                <div className={styles.chatBody}>
+                  {messages.length === 0 && (
+                     <p className={styles.messageEmpty}>Message is empty.</p>
+                  )}
                   {messages.map((message, index) => (
                      <Message
                         key={index}
@@ -82,13 +85,41 @@ function ChatBox({ socket, setSelectedModal, setSendMessage, receivedMessage }) 
                </div>
 
                <div className={styles.chatSendBox}>
-                  <button className={`${styles.plusBtn} button`} onClick={scrollIntoView}>
-                     +
-                  </button>
-                  <InputEmoji value={newMessage} onChange={value => setNewMessage(value)} />
-                  <button className={`${styles.sendBtn} button`} onClick={handleSendMessage}>
-                     Send
-                  </button>
+                  <div>
+                     <div
+                        className={styles.imagePreview}
+                        style={{ backgroundImage: 'url(https://bom.so/eeqLI2)' }}
+                     >
+                        <div>
+                           <UilTimes />
+                        </div>
+                     </div>
+                  </div>
+                  <div>
+                     <button
+                        className={`${styles.plusBtn} button`}
+                        onClick={() => setShowAddMenu(!showAddMenu)}
+                     >
+                        +
+                     </button>
+                     {showAddMenu && (
+                        <div className={styles.menus}>
+                           <div className={styles.menuItem}>
+                              <UilImagePlus />
+                              Image
+                           </div>
+                           <div className={styles.menuItem}>
+                              <UilImagePlus />
+                              Close
+                           </div>
+                        </div>
+                     )}
+
+                     <InputEmoji value={newMessage} onChange={value => setNewMessage(value)} />
+                     <button className={`${styles.sendBtn} button`} onClick={handleSendMessage}>
+                        Send
+                     </button>
+                  </div>
                </div>
             </>
          ) : (
@@ -98,4 +129,4 @@ function ChatBox({ socket, setSelectedModal, setSendMessage, receivedMessage }) 
    )
 }
 
-export default ChatBox
+export default memo(ChatBox)

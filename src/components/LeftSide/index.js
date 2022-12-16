@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { memo, useState } from 'react'
 import { useSelector } from 'react-redux'
 import LogoSearch from '../LogoSearch'
 import Rooms from '../Rooms'
@@ -9,7 +9,7 @@ function LeftSide() {
 
    const [searchValue, setSearchValue] = useState('')
 
-   rooms = rooms.filter(room => room.title.toLowerCase().includes(searchValue))
+   rooms = rooms?.filter(room => room.title.toLowerCase().includes(searchValue))
 
    return (
       <div className={styles.leftSide}>
@@ -20,4 +20,4 @@ function LeftSide() {
    )
 }
 
-export default LeftSide
+export default memo(LeftSide)

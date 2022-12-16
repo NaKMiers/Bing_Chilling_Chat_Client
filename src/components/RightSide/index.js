@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import ChatBox from '../ChatBox'
 import Navbar from '../Navbar'
 import styles from './RightSide.module.scss'
@@ -17,4 +17,4 @@ function RightSide({ setSelectedModal, setSendMessage, receivedMessage, socket }
    )
 }
 
-export default RightSide
+export default memo(RightSide)

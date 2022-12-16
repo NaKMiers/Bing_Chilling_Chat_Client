@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { memo, useEffect, useRef, useState } from 'react'
 import { UilPlus } from '@iconscout/react-unicons'
 import { UilCheck } from '@iconscout/react-unicons'
 import { useDispatch, useSelector } from 'react-redux'
@@ -7,6 +7,7 @@ import avatarData from '../../Data/avatarData'
 import uploadApi from '../../apis/uploadApi'
 import roomApi from '../../apis/roomApi'
 import roomAction from '../../actions/roomAction'
+import validate from '../../Utils/validate'
 
 function EditRoomModal({ setSelectedModal }) {
    const dispatch = useDispatch()
@@ -18,6 +19,7 @@ function EditRoomModal({ setSelectedModal }) {
    const [selected, setSelected] = useState('')
    const [avatars, setAvatars] = useState(avatarData)
    const [avatarUploads, setAvatarUploads] = useState([])
+   const [errors, setErrors] = useState(null)
 
    useEffect(
       () => () => {
@@ -38,8 +40,7 @@ function EditRoomModal({ setSelectedModal }) {
       setAvatars(prev => [avt, ...prev])
    }
 
-   const handleSubmit = async e => {
-      e.preventDefault()
+   const handleEditRoom = async () => {
       const findIndex = value => {
          let index = -1
          avatars.forEach((avt, i) => {
@@ -81,18 +82,35 @@ function EditRoomModal({ setSelectedModal }) {
       }
    }
 
+   const handleSubmit = async e => {
+      e.preventDefault()
+
+      let errorChecks = { title: false }
+      if (!validate.required(title)) {
+         errorChecks.title = true
+         setErrors(prev => ({ ...prev, title: 'Title is required' }))
+      }
+      if (!validate.checkErrors(errorChecks)) {
+         handleEditRoom()
+         setErrors(null)
+      }
+   }
+
    return (
       <div className={styles.EditRoomModal}>
          <form onSubmit={handleSubmit}>
             <h3>{curRoom.title}</h3>
 
+            {errors?.title && <p className={styles.error}>{errors.title}</p>}
+
             <input
                name='title'
-               className={styles.usernameInput}
+               className={styles.formInput}
                type='text'
                placeholder='Title...'
                value={title}
                onChange={e => setTitle(e.target.value)}
+               onFocus={() => setErrors(prev => ({ ...prev, general: '', title: '' }))}
             />
 
             <div className={styles.avatars}>
@@ -140,4 +158,4 @@ function EditRoomModal({ setSelectedModal }) {
    )
 }
 
-export default EditRoomModal
+export default memo(EditRoomModal)

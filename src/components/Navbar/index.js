@@ -1,5 +1,5 @@
 import { UilBars } from '@iconscout/react-unicons'
-import React, { useState } from 'react'
+import React, { memo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import userAction from '../../actions/userAction'
 import roomAction from '../../actions/roomAction'
@@ -83,4 +83,4 @@ function Navbar({ setSelectedModal }) {
    )
 }
 
-export default Navbar
+export default memo(Navbar)

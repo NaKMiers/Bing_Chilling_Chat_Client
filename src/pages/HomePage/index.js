@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { memo, useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import roomAction from '../../actions/roomAction'
 import roomApi from '../../apis/roomApi'
@@ -21,49 +21,62 @@ function HomePage() {
    const curRoom = useSelector(state => state.roomReducer.curRoom)
    const [selectedModal, setSelectedModal] = useState('')
    const socket = useRef()
-
-   console.log('roomData-homePage: ', roomData)
+   const [isConnectSocket, setConnectSocket] = useState(false)
 
    const [sendMessage, setSendMessage] = useState(null)
    const [receivedMessage, setReceivedMessage] = useState(null)
 
    // Connect to socket.io
    useEffect(() => {
-      socket.current = io('http://localhost:3002')
-      socket.current.emit('new-user-add', {
-         newUserId: user?._id,
-         rooms: roomData.map(room => room._id),
-      })
+      if (roomData) {
+         socket.current = io('http://localhost:3002')
+         socket.current.emit('new-user-add', {
+            newUserId: user?._id,
+            rooms: roomData.map(room => room._id),
+         })
+         setConnectSocket(true)
+      }
    }, [user?._id, roomData])
 
    // Send message to socket.io
    useEffect(() => {
-      if (sendMessage !== null) {
-         socket.current.emit('send-message', sendMessage)
+      if (isConnectSocket) {
+         if (sendMessage !== null) {
+            socket.current.emit('send-message', sendMessage)
+         }
       }
-   }, [sendMessage])
+   }, [sendMessage, isConnectSocket])
 
    // Receive message from socket.io
    useEffect(() => {
-      socket.current.on('receive-message', data => {
-         console.log('data received-message', data)
-         setReceivedMessage(data)
-      })
-   }, [])
+      if (isConnectSocket) {
+         socket.current.on('receive-message', data => {
+            console.log('data received-message', data)
+            setReceivedMessage(data)
+         })
+      }
+   }, [isConnectSocket])
 
    // When user JOIN room from socket.io
    useEffect(() => {
-      socket.current.on('join-room', data => {
-         dispatch(roomAction.anotherUserJoinRoom({ ...data, curRoomId: curRoom._id }))
-      })
-   }, [curRoom?._id, dispatch])
+      if (isConnectSocket) {
+         socket.current.on('join-room', data => {
+            console.log('join-room-data: ', data)
+            dispatch(roomAction.anotherUserJoinRoom(data))
+         })
+      }
+   }, [dispatch, isConnectSocket, curRoom])
 
    // When user LEAVE room from socket.io
    useEffect(() => {
-      socket.current.on('leave-room', data => {
-         dispatch(roomAction.anotherUserLeaveRoom({ ...data, curRoomId: curRoom._id }))
-      })
-   }, [curRoom?._id, dispatch])
+      if (isConnectSocket) {
+         socket.current.on('leave-room', data => {
+            console.log('leave-room-data: ', data)
+            console.log('curRoom: ', curRoom)
+            dispatch(roomAction.anotherUserLeaveRoom(data))
+         })
+      }
+   }, [dispatch, isConnectSocket, curRoom])
 
    // Get all rooms
    useEffect(() => {
@@ -91,7 +104,7 @@ function HomePage() {
          case 'login':
             return <LoginLogoutModal setSelectedModal={setSelectedModal} />
          case 'new-room':
-            return <NewRoomModal setSelectedModal={setSelectedModal} />
+            return <NewRoomModal socket={socket} setSelectedModal={setSelectedModal} />
          case 'join-room':
             return <JoinRoomModal socket={socket} setSelectedModal={setSelectedModal} />
          case 'edit-room':
@@ -118,4 +131,4 @@ function HomePage() {
    )
 }
 
-export default HomePage
+export default memo(HomePage)

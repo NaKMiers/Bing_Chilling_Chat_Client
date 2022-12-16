@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { useDispatch } from 'react-redux'
 import roomAction from '../../actions/roomAction'
 import Room from './Room'
@@ -16,7 +16,7 @@ function Rooms({ rooms }) {
          <h3>Rooms</h3>
          <hr />
 
-         {rooms.map((room, index) => (
+         {rooms?.map((room, index) => (
             <div key={room._id} onClick={() => setCurRoom(room)}>
                <Room room={room} />
             </div>
@@ -25,4 +25,4 @@ function Rooms({ rooms }) {
    )
 }
 
-export default Rooms
+export default memo(Rooms)

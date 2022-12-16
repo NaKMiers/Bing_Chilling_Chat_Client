@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { memo, useCallback, useEffect, useRef, useState } from 'react'
 import { UilPlus } from '@iconscout/react-unicons'
 import { UilCheck } from '@iconscout/react-unicons'
 import { useDispatch, useSelector } from 'react-redux'
@@ -7,6 +7,7 @@ import avatarData from '../../Data/avatarData'
 import uploadApi from '../../apis/uploadApi'
 import userApi from '../../apis/userApi'
 import userAction from '../../actions/userAction'
+import validate from '../../Utils/validate'
 
 function ProfileModal({ setSelectedModal }) {
    const dispatch = useDispatch()
@@ -17,6 +18,7 @@ function ProfileModal({ setSelectedModal }) {
    const [selected, setSelected] = useState('')
    const [avatars, setAvatars] = useState(avatarData)
    const [avatarUploads, setAvatarUploads] = useState([])
+   const [errors, setErrors] = useState(null)
 
    useEffect(
       () => () => {
@@ -36,8 +38,7 @@ function ProfileModal({ setSelectedModal }) {
       setAvatars(prev => [avt, ...prev])
    }
 
-   const handleSubmit = async e => {
-      e.preventDefault()
+   const handleEditProfile = async () => {
       const findIndex = value => {
          let index = -1
          avatars.forEach((avt, i) => {
@@ -71,22 +72,68 @@ function ProfileModal({ setSelectedModal }) {
          const res = await userApi.editProfile(user._id, userData)
          dispatch(userAction.editProfile(res.data))
          setSelectedModal(false)
+         setErrors(null)
       } catch (err) {
          console.log(err)
       }
    }
+
+   const handleSubmit = e => {
+      e.preventDefault()
+
+      let errorChecks = { username: false }
+      if (!validate.required(username)) {
+         errorChecks.username = true
+         setErrors(prev => ({ ...prev, username: 'Username is required' }))
+      }
+      if (!validate.checkErrors(errorChecks)) {
+         if (!validate.minLength(username, 6)) {
+            errorChecks.username = true
+            setErrors(prev => ({ ...prev, username: 'Username must be > 5 letters' }))
+         }
+         if (!validate.checkErrors(errorChecks)) {
+            handleEditProfile()
+         }
+      }
+   }
+
+   const renderAvatar = useCallback(
+      () =>
+         avatars.map(avt => (
+            <div
+               key={avt}
+               className={styles.avatarWrap}
+               onClick={() => setSelected(avt !== selected ? avt : '')}
+            >
+               {avt === selected && (
+                  <div className={styles.checkIcon}>
+                     <UilCheck />
+                  </div>
+               )}
+               <img
+                  className={`${styles.avt} ${avt === selected ? styles.selectedAvt : ''}`}
+                  src={avt.startsWith('blob:') ? avt : serverPublic + avt}
+                  alt='avt'
+               />
+            </div>
+         )),
+      [avatars, selected, serverPublic]
+   )
 
    return (
       <div className={styles.profileModal}>
          <form onSubmit={handleSubmit}>
             <h3>Profile</h3>
 
+            {errors?.username && <p className={styles.error}>{errors.username}</p>}
+
             <input
-               className={styles.usernameInput}
+               className={styles.formInput}
                type='text'
                placeholder='Username...'
                value={username}
                onChange={e => setUsername(e.target.value)}
+               onFocus={() => setErrors(prev => ({ ...prev, username: '' }))}
             />
 
             <div className={styles.avatars}>
@@ -103,24 +150,7 @@ function ProfileModal({ setSelectedModal }) {
                   />
                </div>
 
-               {avatars.map(avt => (
-                  <div
-                     key={avt}
-                     className={styles.avatarWrap}
-                     onClick={() => setSelected(avt !== selected ? avt : '')}
-                  >
-                     {avt === selected && (
-                        <div className={styles.checkIcon}>
-                           <UilCheck />
-                        </div>
-                     )}
-                     <img
-                        className={`${styles.avt} ${avt === selected ? styles.selectedAvt : ''}`}
-                        src={avt.startsWith('blob:') ? avt : serverPublic + avt}
-                        alt='avt'
-                     />
-                  </div>
-               ))}
+               {renderAvatar()}
             </div>
 
             <div className={styles.buttonWrap}>
@@ -134,4 +164,4 @@ function ProfileModal({ setSelectedModal }) {
    )
 }
 
-export default ProfileModal
+export default memo(ProfileModal)

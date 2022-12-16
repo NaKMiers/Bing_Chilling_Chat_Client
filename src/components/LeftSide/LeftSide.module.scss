@@ -42,8 +42,8 @@
    width: 28px;
    height: 28px;
    border-radius: 0.3rem;
-   color: #fff;
-   background: orangered;
+   color: var(--white);
+   background: var(--primary);
    cursor: pointer;
 
    & > svg {
@@ -54,7 +54,7 @@
 
 .rooms {
    text-align: center;
-   background: #fff;
+   background: var(--white);
    height: 100%;
    overflow: scroll;
    border-radius: 1rem;

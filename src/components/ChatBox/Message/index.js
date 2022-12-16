@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useState } from 'react'
+import React, { forwardRef, memo, useEffect, useState } from 'react'
 import { format } from 'timeago.js'
 import userApi from '../../../apis/userApi'
 import styles from './Message.module.scss'
@@ -32,7 +32,7 @@ function Message({ message, own }, ref) {
 
             <div className={styles.messageContent}>
                <span
-                  style={{ background: own ? '#999' : 'orangered' }}
+                  style={{ background: own ? 'var(--primary)' : 'var(--old)' }}
                   onClick={() => {
                      setShowTime(!showTime)
                   }}
@@ -46,4 +46,4 @@ function Message({ message, own }, ref) {
    )
 }
 
-export default forwardRef(Message)
+export default memo(forwardRef(Message))

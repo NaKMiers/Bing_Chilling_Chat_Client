@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import styles from './Room.module.scss'
 
 function Room({ room }) {
@@ -22,4 +22,4 @@ function Room({ room }) {
    )
 }
 
-export default Room
+export default memo(Room)
