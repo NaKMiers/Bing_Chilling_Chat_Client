@@ -18,6 +18,7 @@
       gap: 1rem;
 
       max-width: 500px;
+      text-align: center;
       background: var(--secondary);
       border-radius: 1rem;
       margin: auto;
@@ -97,7 +98,6 @@
    transform: translate(-50%, -50%);
 
    & > svg {
-      color: var(--primary);
       width: 4.5rem;
       height: 4.5rem;
       box-shadow: 1px 1px 10px #333;
@@ -126,5 +126,29 @@
 
    &:hover {
       background: var(--white);
+   }
+}
+
+@media (max-width: 748px) {
+   .profileModal {
+      & > form {
+         width: 75vw;
+      }
+   }
+}
+
+@media (max-width: 640px) {
+   .profileModal {
+      & > form {
+         width: 75vw;
+      }
+   }
+}
+
+@media (max-width: 480px) {
+   .profileModal {
+      & > form {
+         width: calc(100vw - 2 * var(--page-padding));
+      }
    }
 }

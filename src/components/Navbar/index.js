@@ -13,12 +13,8 @@ function Navbar({ setHide }) {
 
    const [showMenu, setShowMenu] = useState(false)
 
-   const handleShowMenu = value => {
-      dispatch(userAction.changeCurModal(value))
-      setShowMenu(false)
-   }
-
    const handleOpenModal = value => {
+      setShowMenu(false)
       dispatch(userAction.changeCurModal(value))
    }
 
@@ -62,7 +58,7 @@ function Navbar({ setHide }) {
                <div className={styles.menus}>
                   {user && (
                      <>
-                        <div className={styles.menuItem} onClick={() => handleShowMenu('profile')}>
+                        <div className={styles.menuItem} onClick={() => handleOpenModal('profile')}>
                            Profile
                         </div>
                         <div className={styles.menuItem}>
@@ -70,7 +66,7 @@ function Navbar({ setHide }) {
                         </div>
                         <div
                            className={styles.menuItem}
-                           onClick={() => handleShowMenu('change-password')}
+                           onClick={() => handleOpenModal('change-password')}
                         >
                            Security
                         </div>
@@ -81,7 +77,7 @@ function Navbar({ setHide }) {
                         Logout
                      </div>
                   ) : (
-                     <div className={styles.menuItem} onClick={() => handleShowMenu('login')}>
+                     <div className={styles.menuItem} onClick={() => handleOpenModal('login')}>
                         Login
                      </div>
                   )}

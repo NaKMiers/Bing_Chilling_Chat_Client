@@ -9,7 +9,8 @@
    }
 }
 
-.logo {
+.logo,
+.image {
    width: 40px;
    height: 40px;
    border-radius: 50%;
@@ -75,6 +76,7 @@
          justify-content: space-between;
          align-items: center;
          gap: var(--page-gap);
+
          & > span {
             color: var(--white);
             font-weight: bold;
@@ -83,8 +85,37 @@
       }
 
       & > div:nth-of-type(2) {
+         position: relative;
          display: flex;
+         align-items: center;
+         justify-content: space-between;
          gap: var(--page-gap);
+      }
+   }
+
+   .menus {
+      position: absolute;
+      top: 3rem;
+      right: 0;
+      background: var(--white);
+      border-radius: 0.5rem;
+      padding: 0.5rem 0;
+      box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1);
+      z-index: 2;
+      color: #333;
+
+      & > div:last-child {
+         color: orangered;
+      }
+   }
+
+   .menuItem {
+      cursor: pointer;
+      font-size: 16px;
+      padding: 0.5rem 1.5rem;
+
+      &:hover {
+         background: var(--hover-dark);
       }
    }
 

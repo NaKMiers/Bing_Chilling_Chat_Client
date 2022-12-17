@@ -14,6 +14,9 @@
    --page-padding: 1rem;
    --page-gap: 1rem;
    --navbar-height: 2.5rem;
+
+   --max-width-modal-normal: 300px;
+   --max-width-modal-special: 300px;
 }
 
 

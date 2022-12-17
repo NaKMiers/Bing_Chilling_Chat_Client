@@ -17,8 +17,9 @@
       align-items: center;
       gap: 1rem;
 
-      max-width: 100%;
-      min-width: 25%;
+      max-width: var(--max-width-modal-normal);
+      width: 50vh;
+      text-align: center;
       background: var(--secondary);
       border-radius: 1rem;
       margin: auto;
@@ -88,5 +89,29 @@
 
    &:hover {
       background: var(--white);
+   }
+}
+
+@media (max-width: 748px) {
+   .JoinRoomModal {
+      & > form {
+         width: 75vw;
+      }
+   }
+}
+
+@media (max-width: 640px) {
+   .JoinRoomModal {
+      & > form {
+         width: 75vw;
+      }
+   }
+}
+
+@media (max-width: 480px) {
+   .JoinRoomModal {
+      & > form {
+         width: calc(100vw - 2 * var(--page-padding));
+      }
    }
 }

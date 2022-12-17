@@ -49,7 +49,7 @@ function Security() {
    }
 
    return (
-      <div className={styles.Security}>
+      <div className={styles.SecurityModal}>
          <form onSubmit={hanleSubmit}>
             <h3>Change Password</h3>
 
