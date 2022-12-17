@@ -30,7 +30,7 @@ function HomePage() {
    // Connect to socket.io
    useEffect(() => {
       if (roomData) {
-         socket.current = io('http://localhost:3002')
+         socket.current = io(process.env.REACT_APP_SOCKET_SERVER)
          socket.current.emit('new-user-add', {
             newUserId: user?._id,
             rooms: roomData.map(room => room._id),

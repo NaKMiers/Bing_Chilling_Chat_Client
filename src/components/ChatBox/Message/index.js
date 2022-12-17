@@ -26,10 +26,11 @@ function Message({ message, own }, ref) {
       <div className={`${styles.message} ${own ? styles.own : ''}`} ref={ref}>
          <>
             <img
+               style={{ visibility: user ? 'visible' : 'hidden' }}
                src={serverPublic + (user.avatar || 'defaultAvatar.png')}
                alt='avatar'
-               onDoubleClick={() => setShowMenu(true)}
-               onClick={() => setShowMenu(false)}
+               // onDoubleClick={() => setShowMenu(true)}
+               // onClick={() => setShowMenu(false)}
             />
 
             {showMenu && (
