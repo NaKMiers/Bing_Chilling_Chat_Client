@@ -21,9 +21,6 @@ function ChatBox({ socket, setSendMessage, receivedMessage }) {
    const [images, setImages] = useState([])
    const [imagePreviews, setImagePreviews] = useState([])
 
-   console.log(images)
-   console.log(imagePreviews)
-
    // Sroll to bottom
    useEffect(() => {
       if (scrollRef.current) {
@@ -74,13 +71,12 @@ function ChatBox({ socket, setSendMessage, receivedMessage }) {
 
       // Send message to socket.io
       const receiverIds = curRoom.members.filter(id => id !== user._id)
-      console.log('receiverIds: ', receiverIds)
+      // console.log('receiverIds: ', receiverIds)
       setSendMessage({ ...message, receiverIds })
 
       // Send message to database
       try {
          const res = await messageApi.createMessage(message)
-         console.log('res-send-message: ', res)
          setMessages(prev => [...prev, res.data])
          setNewMessage('')
       } catch (err) {

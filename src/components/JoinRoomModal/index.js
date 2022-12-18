@@ -26,7 +26,7 @@ function JoinRoomModal({ socket }) {
          dispatch(roomAction.joinRoomSuccess(res.data))
 
          // join room in socket.io
-         console.log('join room in socket.io: ', { userJoinId: user._id, roomId })
+         // console.log('join room in socket.io: ', { userJoinId: user._id, roomId })
          socket.current.emit('join-room', { userJoinId: user._id, roomId })
 
          handleOpenModal('')
@@ -46,7 +46,6 @@ function JoinRoomModal({ socket }) {
       let errorChecks = { roomId: false, password: false }
       if (!validate.required(roomId)) {
          errorChecks.roomId = true
-         console.log('errorChecks: ', errorChecks)
          setErrors(prev => ({ ...prev, roomId: 'Room ID is required' }))
       }
       if (security) {

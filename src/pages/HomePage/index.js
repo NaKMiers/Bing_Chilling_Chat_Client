@@ -52,7 +52,7 @@ function HomePage() {
    useEffect(() => {
       if (isConnectSocket) {
          socket.current.on('receive-message', data => {
-            console.log('data received-message', data)
+            // console.log('data received-message', data)
             setReceivedMessage(data)
          })
       }
@@ -62,7 +62,7 @@ function HomePage() {
    useEffect(() => {
       if (isConnectSocket) {
          socket.current.on('join-room', data => {
-            console.log('join-room-data: ', data)
+            // console.log('join-room-data: ', data)
             dispatch(roomAction.anotherUserJoinRoom(data))
          })
       }
@@ -72,8 +72,7 @@ function HomePage() {
    useEffect(() => {
       if (isConnectSocket) {
          socket.current.on('leave-room', data => {
-            console.log('leave-room-data: ', data)
-            console.log('curRoom: ', curRoom)
+            // console.log('leave-room-data: ', data)
             dispatch(roomAction.anotherUserLeaveRoom(data))
          })
       }

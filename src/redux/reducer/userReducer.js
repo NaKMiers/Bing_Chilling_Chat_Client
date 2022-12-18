@@ -35,7 +35,6 @@ function reducer(state = initState, action) {
          }
 
       case 'CHANGE_CUR_MODAL':
-         console.log('CHANGE_CUR_MODAL: ', action)
          return { ...state, curModal: action.payload, loading: false, error: false }
 
       default:

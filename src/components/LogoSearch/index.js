@@ -1,9 +1,8 @@
 import { UilSearch } from '@iconscout/react-unicons'
 import React, { memo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
-import roomAction from '../../actions/roomAction'
 import userAction from '../../actions/userAction'
+import NavMenu from '../NavMenu'
 import styles from './LogoSearch.module.scss'
 
 function LogoSearch({ searchValue, setSearchValue }) {
@@ -14,11 +13,6 @@ function LogoSearch({ searchValue, setSearchValue }) {
 
    const handleOpenModal = value => {
       dispatch(userAction.changeCurModal(value))
-   }
-
-   const hanleLogout = () => {
-      dispatch(userAction.logout())
-      dispatch(roomAction.clearAll())
    }
 
    return (
@@ -65,38 +59,7 @@ function LogoSearch({ searchValue, setSearchValue }) {
                      style={{ cursor: 'pointer' }}
                      onClick={() => setShowMenu(!showMenu)}
                   />
-                  {showMenu && (
-                     <div className={styles.menus}>
-                        {user && (
-                           <>
-                              <div
-                                 className={styles.menuItem}
-                                 onClick={() => handleOpenModal('profile')}
-                              >
-                                 Profile
-                              </div>
-                              <div className={styles.menuItem}>
-                                 <Link to='/setting'>Setting</Link>
-                              </div>
-                              <div
-                                 className={styles.menuItem}
-                                 onClick={() => handleOpenModal('change-password')}
-                              >
-                                 Security
-                              </div>
-                           </>
-                        )}
-                        {user ? (
-                           <div className={styles.menuItem} onClick={hanleLogout}>
-                              Logout
-                           </div>
-                        ) : (
-                           <div className={styles.menuItem} onClick={() => handleOpenModal('login')}>
-                              Login
-                           </div>
-                        )}
-                     </div>
-                  )}
+                  {showMenu && <NavMenu setShowMenu={setShowMenu} />}
                </div>
             </div>
             <div className={`${styles.navBottom} ${styles.inputWrap}`}>

@@ -1,9 +1,8 @@
-import React, { memo, useState } from 'react'
 import { UilAngleLeftB, UilBars } from '@iconscout/react-unicons'
+import React, { memo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
-import roomAction from '../../actions/roomAction'
 import userAction from '../../actions/userAction'
+import NavMenu from '../NavMenu'
 import styles from './Navbar.module.scss'
 
 function Navbar({ setHide }) {
@@ -16,11 +15,6 @@ function Navbar({ setHide }) {
    const handleOpenModal = value => {
       setShowMenu(false)
       dispatch(userAction.changeCurModal(value))
-   }
-
-   const hanleLogout = () => {
-      dispatch(userAction.logout())
-      dispatch(roomAction.clearAll())
    }
 
    return (
@@ -54,35 +48,7 @@ function Navbar({ setHide }) {
                <UilBars />
             </div>
 
-            {showMenu && (
-               <div className={styles.menus}>
-                  {user && (
-                     <>
-                        <div className={styles.menuItem} onClick={() => handleOpenModal('profile')}>
-                           Profile
-                        </div>
-                        <div className={styles.menuItem}>
-                           <Link to='/setting'>Setting</Link>
-                        </div>
-                        <div
-                           className={styles.menuItem}
-                           onClick={() => handleOpenModal('change-password')}
-                        >
-                           Security
-                        </div>
-                     </>
-                  )}
-                  {user ? (
-                     <div className={styles.menuItem} onClick={hanleLogout}>
-                        Logout
-                     </div>
-                  ) : (
-                     <div className={styles.menuItem} onClick={() => handleOpenModal('login')}>
-                        Login
-                     </div>
-                  )}
-               </div>
-            )}
+            {showMenu && <NavMenu setShowMenu={setShowMenu} />}
          </div>
       </div>
    )

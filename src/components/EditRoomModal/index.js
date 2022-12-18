@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useRef, useState } from 'react'
+import React, { memo, useCallback, useEffect, useRef, useState } from 'react'
 import { UilPlus } from '@iconscout/react-unicons'
 import { UilCheck } from '@iconscout/react-unicons'
 import { useDispatch, useSelector } from 'react-redux'
@@ -38,11 +38,18 @@ function EditRoomModal() {
    }
 
    const onUploadImage = e => {
-      const imgFile = e.target.files[0]
-      const avt = URL.createObjectURL(imgFile)
-      console.log(avt)
-      setAvatarUploads([imgFile, ...avatarUploads])
-      setAvatars(prev => [avt, ...prev])
+      const file = e.target.files[0]
+      if (file) {
+         if (!file.type.startsWith('image')) {
+            setErrors(prev => ({ ...prev, file: 'File upload must be an image' }))
+         } else if (file.size > 1048576) {
+            setErrors(prev => ({ ...prev, file: 'Maximum file size is 1 mb' }))
+         } else {
+            const avt = URL.createObjectURL(file)
+            setAvatarUploads([file, ...avatarUploads])
+            setAvatars(prev => [avt, ...prev])
+         }
+      }
    }
 
    const handleEditRoom = async () => {
@@ -101,6 +108,29 @@ function EditRoomModal() {
       }
    }
 
+   const renderAvatar = useCallback(
+      () =>
+         avatars.map(avt => (
+            <div
+               key={avt}
+               className={styles.avatarWrap}
+               onClick={() => setSelected(avt !== selected ? avt : '')}
+            >
+               {avt === selected && (
+                  <div className={styles.checkIcon}>
+                     <UilCheck />
+                  </div>
+               )}
+               <img
+                  className={`${styles.avt} ${avt === selected ? styles.selectedAvt : ''}`}
+                  src={avt.startsWith('blob:') ? avt : serverPublic + avt}
+                  alt='avt'
+               />
+            </div>
+         )),
+      [avatars, selected, serverPublic]
+   )
+
    return (
       <div className={styles.EditRoomModal}>
          <form onSubmit={handleSubmit}>
@@ -118,38 +148,27 @@ function EditRoomModal() {
                onFocus={() => setErrors(prev => ({ ...prev, general: '', title: '' }))}
             />
 
-            <div className={styles.avatars}>
-               <div
-                  className={`${styles.avatarWrap} ${styles.addImageBtn}`}
-                  onClick={() => fileRef.current.click()}
-               >
-                  <UilPlus />
-                  <input
-                     type='file'
-                     ref={fileRef}
-                     style={{ display: 'none' }}
-                     onChange={onUploadImage}
-                  />
-               </div>
-
-               {avatars.map(avt => (
+            <div className={styles.avatarsWrap}>
+               {errors?.file && <p className={styles.error}>{errors.file}</p>}
+               <div className={styles.avatars}>
                   <div
-                     key={avt}
-                     className={styles.avatarWrap}
-                     onClick={() => setSelected(avt !== selected ? avt : '')}
+                     className={`${styles.avatarWrap} ${styles.addImageBtn}`}
+                     onClick={() => {
+                        fileRef.current.click()
+                        setErrors(null)
+                     }}
                   >
-                     {avt === selected && (
-                        <div className={styles.checkIcon}>
-                           <UilCheck />
-                        </div>
-                     )}
-                     <img
-                        className={`${styles.avt} ${avt === selected ? styles.selectedAvt : ''}`}
-                        src={avt.startsWith('blob:') ? avt : serverPublic + avt}
-                        alt='avt'
+                     <UilPlus />
+                     <input
+                        style={{ display: 'none' }}
+                        type='file'
+                        ref={fileRef}
+                        onChange={onUploadImage}
                      />
                   </div>
-               ))}
+
+                  {renderAvatar()}
+               </div>
             </div>
 
             <div className={styles.buttonWrap}>

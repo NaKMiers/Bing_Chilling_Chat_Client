@@ -1,6 +1,6 @@
 import { Route } from 'react-router-dom'
 import HomePage from '../pages/HomePage'
-import SettingPage from '../pages/SettingPage'
+import DevInfoPage from '../pages/DevInfoPage'
 
 const routes = [
    {
@@ -9,9 +9,9 @@ const routes = [
       element: <HomePage />,
    },
    {
-      path: '/setting',
+      path: '/dev-info',
       exact: true,
-      element: <SettingPage />,
+      element: <DevInfoPage />,
    },
 ]
 

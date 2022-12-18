@@ -1,0 +1,52 @@
+.menus {
+   position: absolute;
+   top: 2.3rem;
+   right: 0;
+   background: var(--white);
+   border-radius: 0.5rem;
+   padding: 0.5rem 0;
+   box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1);
+   z-index: 2;
+   color: #333;
+
+   & > div:last-child {
+      color: orangered;
+   }
+}
+
+.menuItem {
+   cursor: pointer;
+   font-size: 16px;
+   padding: 0.5rem 1.5rem;
+
+   &:hover {
+      background: var(--hover-dark);
+   }
+}
+
+@media (max-width: 768px) {
+   .menus {
+      position: absolute;
+      top: 3rem;
+      background: var(--white);
+      border-radius: 0.5rem;
+      padding: 0.5rem 0;
+      box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1);
+      z-index: 2;
+      color: #333;
+
+      & > div:last-child {
+         color: orangered;
+      }
+   }
+
+   .menuItem {
+      cursor: pointer;
+      font-size: 16px;
+      padding: 0.5rem 1.5rem;
+
+      &:hover {
+         background: var(--hover-dark);
+      }
+   }
+}

@@ -36,10 +36,18 @@ function ProfileModal() {
    }
 
    const onUploadImage = e => {
-      const imgFile = e.target.files[0]
-      const avt = URL.createObjectURL(imgFile)
-      setAvatarUploads([imgFile, ...avatarUploads])
-      setAvatars(prev => [avt, ...prev])
+      const file = e.target.files[0]
+      if (file) {
+         if (!file.type.startsWith('image')) {
+            setErrors(prev => ({ ...prev, file: 'File upload must be an image' }))
+         } else if (file.size > 1048576) {
+            setErrors(prev => ({ ...prev, file: 'Maximum file size is 1 mb' }))
+         } else {
+            const avt = URL.createObjectURL(file)
+            setAvatarUploads([file, ...avatarUploads])
+            setAvatars(prev => [avt, ...prev])
+         }
+      }
    }
 
    const handleEditProfile = async () => {
@@ -140,21 +148,27 @@ function ProfileModal() {
                onFocus={() => setErrors(prev => ({ ...prev, username: '' }))}
             />
 
-            <div className={styles.avatars}>
-               <div
-                  className={`${styles.avatarWrap} ${styles.addImageBtn}`}
-                  onClick={() => fileRef.current.click()}
-               >
-                  <UilPlus />
-                  <input
-                     style={{ display: 'none' }}
-                     type='file'
-                     ref={fileRef}
-                     onChange={onUploadImage}
-                  />
-               </div>
+            <div className={styles.avatarsWrap}>
+               {errors?.file && <p className={styles.error}>{errors.file}</p>}
+               <div className={styles.avatars}>
+                  <div
+                     className={`${styles.avatarWrap} ${styles.addImageBtn}`}
+                     onClick={() => {
+                        fileRef.current.click()
+                        setErrors(null)
+                     }}
+                  >
+                     <UilPlus />
+                     <input
+                        style={{ display: 'none' }}
+                        type='file'
+                        ref={fileRef}
+                        onChange={onUploadImage}
+                     />
+                  </div>
 
-               {renderAvatar()}
+                  {renderAvatar()}
+               </div>
             </div>
 
             <div className={styles.buttonWrap}>

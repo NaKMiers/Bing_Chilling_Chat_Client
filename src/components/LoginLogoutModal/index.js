@@ -19,7 +19,6 @@ function LoginLogoutModal() {
    const handleChange = e => setFormData({ ...formData, [e.target.name]: e.target.value })
 
    const handleLogin = async () => {
-      console.log(123123)
       try {
          const res = await authApi.login(formData)
          dispatch(userAction.loginSuccess(res.data))
