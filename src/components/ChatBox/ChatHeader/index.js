@@ -86,12 +86,14 @@ function ChatHeader({ socket }) {
                <div className={styles.menuItem} onClick={() => handleSelectedModal('edit-room')}>
                   Edit Room
                </div>
-               <div
-                  className={styles.menuItem}
-                  onClick={() => handleSelectedModal('change-room-password')}
-               >
-                  Security
-               </div>
+               {curRoom.host === user._id && (
+                  <div
+                     className={styles.menuItem}
+                     onClick={() => handleSelectedModal('change-room-password')}
+                  >
+                     Security
+                  </div>
+               )}
                <div className={styles.menuItem}>Blocks</div>
                <div className={styles.menuItem} onClick={handleLeave}>
                   Leave

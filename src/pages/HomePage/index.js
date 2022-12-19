@@ -1,18 +1,15 @@
 import React, { memo, useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { io } from 'socket.io-client'
 import roomAction from '../../actions/roomAction'
 import roomApi from '../../apis/roomApi'
 import EditRoomModal from '../../components/EditRoomModal'
 import JoinRoomModal from '../../components/JoinRoomModal'
 import LeftSide from '../../components/LeftSide'
-import LoginLogoutModal from '../../components/LoginLogoutModal'
 import NewRoomModal from '../../components/NewRoomModal'
-import ProfileModal from '../../components/ProfileModal'
 import RightSide from '../../components/RightSide'
 import RoomSecurityModal from '../../components/RoomSecurityModal'
-import SecurityModal from '../../components/SecurityModal'
 import styles from './HomePage.module.scss'
-import { io } from 'socket.io-client'
 
 function HomePage() {
    const dispatch = useDispatch()
@@ -97,12 +94,6 @@ function HomePage() {
 
    const renderModals = () => {
       switch (curModal) {
-         case 'profile':
-            return <ProfileModal />
-         case 'change-password':
-            return <SecurityModal />
-         case 'login':
-            return <LoginLogoutModal />
          case 'new-room':
             return <NewRoomModal socket={socket} />
          case 'join-room':

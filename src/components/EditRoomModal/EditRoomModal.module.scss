@@ -15,9 +15,10 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 1rem;
+      gap: var(--page-gap);
 
       max-width: 500px;
+      width: 75vw;
       text-align: center;
       background: var(--secondary);
       border-radius: 1rem;
@@ -55,11 +56,11 @@
    max-height: 50vh;
    display: flex;
    flex-wrap: wrap;
-   background: var(--white);
+   justify-content: space-evenly;
    padding: 0.5rem;
-   border-radius: 1rem;
    overflow: scroll;
    font-size: 16px;
+   gap: 0.5rem;
 
    &::-webkit-scrollbar {
       display: none;
@@ -68,13 +69,12 @@
 
 .avatarWrap {
    position: relative;
-   width: calc(100% / 4);
+   width: 6.5rem;
    display: flex;
    justify-content: center;
    align-items: center;
    cursor: pointer;
    overflow: hidden;
-   padding: 0.3rem;
 }
 
 .selectedAvt {
@@ -117,7 +117,7 @@
 .buttonWrap {
    display: flex;
    justify-content: flex-end;
-   gap: 1rem;
+   gap: var(--page-gap);
    width: 100%;
 }
 
@@ -139,18 +139,15 @@
 }
 
 @media (max-width: 748px) {
-   .EditRoomModal {
-      & > form {
-         width: 75vw;
-      }
-   }
 }
 
 @media (max-width: 640px) {
-   .EditRoomModal {
-      & > form {
-         width: 75vw;
-      }
+   .avatarWrap {
+      width: 6rem;
+   }
+   .avt {
+      width: 6rem;
+      height: 6rem;
    }
 }
 

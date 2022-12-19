@@ -1,5 +1,5 @@
-import { UilSearch } from '@iconscout/react-unicons'
 import React, { memo, useState } from 'react'
+import { UilSearch } from '@iconscout/react-unicons'
 import { useDispatch, useSelector } from 'react-redux'
 import userAction from '../../actions/userAction'
 import NavMenu from '../NavMenu'

@@ -4,6 +4,7 @@
    --primary: linear-gradient(120deg, #e51937, orangered);
    --secondary: linear-gradient(180deg, rgb(245, 211, 211), rgb(239, 180, 157));
    --white: #fff;
+   --black: #333;
    --hr: #ececec;
    --border-light: #fff;
    --border-dark: #333; 

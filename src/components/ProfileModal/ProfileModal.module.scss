@@ -15,9 +15,10 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 1rem;
+      gap: var(--page-gap);
 
       max-width: 500px;
+      width: 75vw;
       text-align: center;
       background: var(--secondary);
       border-radius: 1rem;
@@ -55,9 +56,11 @@
    max-height: 50vh;
    display: flex;
    flex-wrap: wrap;
+   justify-content: space-evenly;
    padding: 0.5rem;
    overflow: scroll;
    font-size: 16px;
+   gap: 0.5rem;
 
    &::-webkit-scrollbar {
       display: none;
@@ -66,13 +69,12 @@
 
 .avatarWrap {
    position: relative;
-   width: calc(100% / 4);
+   width: 6.5rem;
    display: flex;
    justify-content: center;
    align-items: center;
    cursor: pointer;
    overflow: hidden;
-   padding: 0.3rem;
 }
 
 .selectedAvt {
@@ -90,9 +92,10 @@
 }
 
 .avt {
-   width: 100%;
-   height: 100%;
+   width: 6.5rem;
+   height: 6.5rem;
    border-radius: 0.8rem;
+   object-fit: cover;
 }
 
 .checkIcon {
@@ -105,16 +108,17 @@
    transform: translate(-50%, -50%);
 
    & > svg {
+      color: var(--white);
       width: 4.5rem;
       height: 4.5rem;
-      box-shadow: 1px 1px 10px #333;
+      box-shadow: 1px 1px 10px var(--black);
    }
 }
 
 .buttonWrap {
    display: flex;
    justify-content: flex-end;
-   gap: 1rem;
+   gap: var(--page-gap);
    width: 100%;
 }
 
@@ -137,18 +141,15 @@
 }
 
 @media (max-width: 748px) {
-   .profileModal {
-      & > form {
-         width: 75vw;
-      }
-   }
 }
 
 @media (max-width: 640px) {
-   .profileModal {
-      & > form {
-         width: 75vw;
-      }
+   .avatarWrap {
+      width: 6rem;
+   }
+   .avt {
+      width: 6rem;
+      height: 6rem;
    }
 }
 
